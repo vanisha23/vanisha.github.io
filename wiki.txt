@@ -1,0 +1,2199 @@
+   #[1]alternate [2]Edit this page [3]Wikipedia (en)
+
+Git
+
+   From Wikipedia, the free encyclopedia
+   [4]Jump to navigation [5]Jump to search
+   Free and open source software (FOSS) for revision control
+   For other uses, see [6]Git (disambiguation).
+
+   This article may be too technical for most readers to understand.
+   Please [7]help improve it to [8]make it understandable to non-experts,
+   without removing the technical details. (August 2020) ([9]Learn how and
+   when to remove this template message)
+
+   CAPTION: Git
+
+   [10]Git-logo.svg
+   [11]A command-line session showing repository creation, addition of a
+   file, and remote synchronization
+   A command-line session showing repository creation, addition of a file,
+   and remote synchronization
+   [12]Original author(s) [13]Linus Torvalds^[14][1]
+   [15]Developer(s) Junio Hamano and others^[16][2]
+   Initial release 7 April 2005; 15 years ago (2005-04-07)
+   [17]Stable release
+   2.28 / 27 July 2020; 40 days ago (2020-07-27)^[18][3]
+   [19]Repository
+     * [20]git.kernel.org/pub/scm/git/git.git/
+
+   [21]Edit this at Wikidata
+   Written in [22]C, [23]Shell, [24]Perl, [25]Tcl, [26]Python^[27][4]
+   [28]Operating system [29]POSIX ([30]Linux, [31]macOS, [32]Solaris,
+   [33]AIX), [34]Windows
+   Available in English
+   [35]Type [36]Version control
+   [37]License [38]GPLv2,^[39][5] [40]LGPLv2.1,^[41][6] and others
+   Website [42]git-scm.com
+
+   Git ([43]/ɡɪt/)^[44][7] is a [45]distributed version-control system for
+   tracking changes in [46]source code during [47]software
+   development.^[48][8] It is designed for coordinating work among
+   [49]programmers, but it can be used to track changes in any set of
+   [50]files. Its goals include speed, [51]data integrity, and support for
+   distributed, non-linear workflows^[[52]clarification
+   needed].^[53][9]^[54][10]^[55][11]
+
+   Git was created by [56]Linus Torvalds in 2005 for development of the
+   [57]Linux kernel, with other kernel developers contributing to its
+   initial development.^[58][12] Since 2005, Junio Hamano has been the
+   core maintainer. As with most other distributed version-control
+   systems, and unlike most [59]client–server systems, every Git
+   [60]directory on every [61]computer is a full-fledged [62]repository
+   with complete history and full version-tracking abilities, independent
+   of network access or a central server.^[63][13] Git is [64]free and
+   open-source software distributed under [65]GNU General Public License
+   Version 2.
+   [ ]
+
+Contents
+
+     * [66]1 History
+          + [67]1.1 Naming
+          + [68]1.2 Releases
+     * [69]2 Design
+          + [70]2.1 Characteristics
+          + [71]2.2 Data structures
+          + [72]2.3 References
+     * [73]3 Implementations
+     * [74]4 Git GUIs
+     * [75]5 Git server
+          + [76]5.1 Open source
+          + [77]5.2 Git server as a service
+     * [78]6 Adoption
+          + [79]6.1 Extensions
+     * [80]7 Conventions
+     * [81]8 Security
+     * [82]9 See also
+     * [83]10 Notes
+     * [84]11 References
+     * [85]12 External links
+
+History[[86]edit]
+
+   Git development began in April 2005, after many developers of the
+   [87]Linux kernel gave up access to [88]BitKeeper, a proprietary
+   source-control management (SCM) system that they had been using to
+   maintain the project since 2002.^[89][14]^[90][15] The copyright holder
+   of BitKeeper, [91]Larry McVoy, had withdrawn free use of the product
+   after claiming that [92]Andrew Tridgell had created [93]SourcePuller by
+   [94]reverse engineering the BitKeeper protocols.^[95][16] The same
+   incident also spurred the creation of another version-control system,
+   [96]Mercurial.
+
+   [97]Linus Torvalds wanted a distributed system that he could use like
+   BitKeeper, but none of the available free systems met his needs.
+   Torvalds cited an example of a source-control management system needing
+   30 seconds to apply a patch and update all associated metadata, and
+   noted that this would not scale to the needs of Linux kernel
+   development, where synchronizing with fellow maintainers could require
+   250 such actions at once. For his design criterion, he specified that
+   patching should take no more than three seconds, and added three more
+   points:^[98][9]
+     * Take [99]Concurrent Versions System (CVS) as an example of what not
+       to do; if in doubt, make the exact opposite decision.^[100][11]
+     * Support a distributed, BitKeeper-like workflow.^[101][11]
+     * Include very strong safeguards against corruption, either
+       accidental or malicious.^[102][10]
+
+   These criteria eliminated every then-extant version-control system, so
+   immediately after the 2.6.12-rc2 Linux kernel development release,
+   Torvalds set out to write his own.^[103][11]
+
+   The development of Git began on 3 April 2005.^[104][17] Torvalds
+   announced the project on 6 April and became [105]self-hosting the next
+   day.^[106][18]^[107][17] The first merge of multiple branches took
+   place on 18 April.^[108][19] Torvalds achieved his performance goals;
+   on 29 April, the nascent Git was benchmarked recording patches to the
+   Linux kernel tree at the rate of 6.7 patches per second.^[109][20] On
+   16 June, Git managed the kernel 2.6.12 release.^[110][21]
+
+   Torvalds turned over [111]maintenance on 26 July 2005 to Junio Hamano,
+   a major contributor to the project.^[112][22] Hamano was responsible
+   for the 1.0 release on 21 December 2005 and remains the project's core
+   maintainer.^[113][23]
+
+Naming[[114]edit]
+
+   Torvalds sarcastically quipped about the name git (which means
+   "unpleasant person" in [115]British English slang): "I'm an egotistical
+   bastard, and I name all my projects after myself. First '[116]Linux',
+   now 'git'."^[117][24]^[118][25] The [119]man page describes Git as "the
+   stupid content tracker".^[120][26] The read-me file of the source code
+   elaborates further:^[121][27]
+
+     "git" can mean anything, depending on your mood.
+     * random three-letter combination that is pronounceable, and not
+       actually used by any common UNIX command. The fact that it is a
+       mispronunciation of "get" may or may not be relevant.
+     * stupid. contemptible and despicable. simple. Take your pick from
+       the dictionary of slang.
+     * "global information tracker": you're in a good mood, and it
+       actually works for you. Angels sing, and a light suddenly fills the
+       room.
+     * "goddamn idiotic truckload of sh*t": when it breaks
+
+Releases[[122]edit]
+
+   List of Git releases:^[123][28]
+   Version Original release date Latest (patch) version Release date (of
+   patch)
+   Old version, no longer maintained: 0.99 2005-07-11 0.99.9n 2005-12-15
+   Old version, no longer maintained: 1.0 2005-12-21 1.0.13 2006-01-27
+   Old version, no longer maintained: 1.1 2006-01-08 1.1.6 2006-01-30
+   Old version, no longer maintained: 1.2 2006-02-12 1.2.6 2006-04-08
+   Old version, no longer maintained: 1.3 2006-04-18 1.3.3 2006-05-16
+   Old version, no longer maintained: 1.4 2006-06-10 1.4.4.5 2008-07-16
+   Old version, no longer maintained: 1.5 2007-02-14 1.5.6.6 2008-12-17
+   Old version, no longer maintained: 1.6 2008-08-17 1.6.6.3 2010-12-15
+   Old version, no longer maintained: 1.7 2010-02-13 1.7.12.4 2012-10-17
+   Old version, no longer maintained: 1.8 2012-10-21 1.8.5.6 2014-12-17
+   Old version, no longer maintained: 1.9 2014-02-14 1.9.5 2014-12-17
+   Old version, no longer maintained: 2.0 2014-05-28 2.0.5 2014-12-17
+   Old version, no longer maintained: 2.1 2014-08-16 2.1.4 2014-12-17
+   Old version, no longer maintained: 2.2 2014-11-26 2.2.3 2015-09-04
+   Old version, no longer maintained: 2.3 2015-02-05 2.3.10 2015-09-29
+   Old version, no longer maintained: 2.4 2015-04-30 2.4.12 2017-05-05
+   Old version, no longer maintained: 2.5 2015-07-27 2.5.6 2017-05-05
+   Old version, no longer maintained: 2.6 2015-09-28 2.6.7 2017-05-05
+   Old version, no longer maintained: 2.7 2015-10-04 2.7.6 2017-07-30
+   Old version, no longer maintained: 2.8 2016-03-28 2.8.6 2017-07-30
+   Old version, no longer maintained: 2.9 2016-06-13 2.9.5 2017-07-30
+   Old version, no longer maintained: 2.10 2016-09-02 2.10.5 2017-09-22
+   Old version, no longer maintained: 2.11 2016-11-29 2.11.4 2017-09-22
+   Old version, no longer maintained: 2.12 2017-02-24 2.12.5 2017-09-22
+   Old version, no longer maintained: 2.13 2017-05-10 2.13.7 2018-05-22
+   Old version, no longer maintained: 2.14 2017-08-04 2.14.6 2019-12-07
+   Old version, no longer maintained: 2.15 2017-10-30 2.15.4 2019-12-07
+   Old version, no longer maintained: 2.16 2018-01-17 2.16.6 2019-12-07
+   Old version, no longer maintained: 2.17 2018-04-02 2.17.5 2020-04-20
+   Old version, no longer maintained: 2.18 2018-06-21 2.18.4 2020-04-20
+   Old version, no longer maintained: 2.19 2018-09-10 2.19.5 2020-04-20
+   Old version, no longer maintained: 2.20 2018-12-09 2.20.4 2020-04-20
+   Old version, no longer maintained: 2.21^[[124]citation needed]
+   2019-02-24 2.21.3 2020-04-20
+   Older version, yet still maintained: 2.22 2019-06-07 2.22.4 2020-04-20
+   Older version, yet still maintained: 2.23 2019-08-16 2.23.3 2020-04-20
+   Older version, yet still maintained: 2.24 2019-11-04 2.24.3 2020-04-20
+   Older version, yet still maintained: 2.25 2020-01-13 2.25.4 2020-04-20
+   Older version, yet still maintained: 2.26 2020-03-22 2.26.2 2020-04-20
+   Older version, yet still maintained: 2.27 2020-06-01 2.27.0 2020-06-01
+   Current stable version: 2.28 2020-07-27 2.28.0 2020-07-27
+   Legend:
+   Old version
+   Older version, still maintained
+   Latest version
+   Latest preview version
+   Future release
+   Sources: ^[125][29]^[126][30]
+
+Design
+
+   Git's design was inspired by [127]BitKeeper and
+   [128]Monotone.^[129][31]^[130][32] Git was originally designed as a
+   low-level version-control system engine, on top of which others could
+   write front ends, such as [131]Cogito or [132]StGIT.^[133][32] The core
+   Git project has since become a complete version-control system that is
+   usable directly.^[134][33] While strongly influenced by BitKeeper,
+   Torvalds deliberately avoided conventional approaches, leading to a
+   unique design.^[135][34]
+
+Characteristics[[136]edit]
+
+   This section needs additional citations for [137]verification. Please
+   help [138]improve this article by [139]adding citations to reliable
+   sources. Unsourced material may be challenged and removed.
+   Find sources: [140]"Git" – [141]news · [142]newspapers · [143]books ·
+   [144]scholar · [145]JSTOR (June 2020) ([146]Learn how and when to
+   remove this template message)
+
+   Git's design is a synthesis of Torvalds's experience with Linux in
+   maintaining a large distributed development project, along with his
+   intimate knowledge of file-system performance gained from the same
+   project and the urgent need to produce a working system in short order.
+   These influences led to the following implementation choices:^[147][35]
+
+   Strong support for non-linear development
+          Git supports rapid branching and merging, and includes specific
+          tools for visualizing and navigating a non-linear development
+          history. In Git, a core assumption is that a change will be
+          merged more often than it is written, as it is passed around to
+          various reviewers. In Git, branches are very lightweight: a
+          branch is only a reference to one commit. With its parental
+          commits, the full branch structure can be
+          constructed.^[[148]improper synthesis?]
+
+   Distributed development
+          Like [149]Darcs, [150]BitKeeper, [151]Mercurial, [152]Bazaar,
+          and [153]Monotone, Git gives each developer a local copy of the
+          full development history, and changes are copied from one such
+          repository to another. These changes are imported as added
+          development branches and can be merged in the same way as a
+          locally developed branch.^[154][36]
+
+   Compatibility with existent systems and protocols
+          Repositories can be published via [155]Hypertext Transfer
+          Protocol (HTTP), [156]File Transfer Protocol (FTP), or a Git
+          protocol over either a plain socket, or [157]Secure Shell (ssh).
+          Git also has a CVS server emulation, which enables the use of
+          existent CVS clients and IDE plugins to access Git repositories.
+          [158]Subversion repositories can be used directly with
+          git-svn.^[[159]citation needed]
+
+   Efficient handling of large projects
+          Torvalds has described Git as being very fast and
+          scalable,^[160][37] and performance tests done by
+          Mozilla^[161][38] showed that it was an [162]order of magnitude
+          faster than some version-control systems; fetching version
+          history from a locally stored repository can be one hundred
+          times faster than fetching it from the remote server.^[163][39]
+
+   Cryptographic authentication of history
+          The Git history is stored in such a way that the ID of a
+          particular version (a commit in Git terms) depends upon the
+          complete development history leading up to that commit. Once it
+          is published, it is not possible to change the old versions
+          without it being noticed. The structure is similar to a
+          [164]Merkle tree, but with added data at the nodes and
+          leaves.^[165][40] ([166]Mercurial and [167]Monotone also have
+          this property.)
+
+   Toolkit-based design
+          Git was designed as a set of programs written in [168]C and
+          several shell scripts that provide wrappers around those
+          programs.^[169][41] Although most of those scripts have since
+          been rewritten in C for speed and portability, the design
+          remains, and it is easy to chain the components
+          together.^[170][42]
+
+   Pluggable merge strategies
+          As part of its toolkit design, Git has a well-defined model of
+          an incomplete merge, and it has multiple algorithms for
+          completing it, culminating in telling the user that it is unable
+          to complete the merge automatically and that manual editing is
+          needed.^[[171]citation needed]
+
+   [172]Garbage accumulates until collected
+          Aborting operations or backing out changes will leave useless
+          dangling objects in the database. These are generally a small
+          fraction of the continuously growing history of wanted objects.
+          Git will automatically perform [173]garbage collection when
+          enough loose objects have been created in the repository.
+          Garbage collection can be called explicitly using git
+          gc.^[174][43]
+
+   Periodic explicit object packing
+          Git stores each newly created object as a separate file.
+          Although individually compressed, this takes a great deal of
+          space and is inefficient. This is solved by the use of packs
+          that store a large number of objects [175]delta-compressed among
+          themselves in one file (or network byte stream) called a
+          packfile. Packs are compressed using the [176]heuristic that
+          files with the same name are probably similar, without depending
+          on this for correctness. A corresponding index file is created
+          for each packfile, telling the offset of each object in the
+          packfile. Newly created objects (with newly added history) are
+          still stored as single objects, and periodic repacking is needed
+          to maintain space efficiency. The process of packing the
+          repository can be very computationally costly. By allowing
+          objects to exist in the repository in a loose but quickly
+          generated format, Git allows the costly pack operation to be
+          deferred until later, when time matters less, e.g., the end of a
+          work day. Git does periodic repacking automatically, but manual
+          repacking is also possible with the git gc command. For data
+          integrity, both the packfile and its index have an [177]SHA-1
+          checksum inside, and the file name of the packfile also contains
+          an SHA-1 checksum. To check the integrity of a repository, run
+          the git fsck command.^[178][44]
+
+   Another property of Git is that it snapshots directory trees of files.
+   The earliest systems for tracking versions of source code, [179]Source
+   Code Control System (SCCS) and [180]Revision Control System (RCS),
+   worked on individual files and emphasized the space savings to be
+   gained from [181]interleaved deltas (SCCS) or [182]delta encoding (RCS)
+   the (mostly similar) versions. Later revision-control systems
+   maintained this notion of a file having an identity across multiple
+   revisions of a project. However, Torvalds rejected this
+   concept.^[183][45] Consequently, Git does not explicitly record file
+   revision relationships at any level below the source-code tree.
+
+   These implicit revision relationships have some significant
+   consequences:
+     * It is slightly more costly to examine the change history of one
+       file than the whole project.^[184][46] To obtain a history of
+       changes affecting a given file, Git must walk the global history
+       and then determine whether each change modified that file. This
+       method of examining history does, however, let Git produce with
+       equal efficiency a single history showing the changes to an
+       arbitrary set of files. For example, a subdirectory of the source
+       tree plus an associated global header file is a very common case.
+     * Renames are handled implicitly rather than explicitly. A common
+       complaint with [185]CVS is that it uses the name of a file to
+       identify its revision history, so moving or renaming a file is not
+       possible without either interrupting its history or renaming the
+       history and thereby making the history inaccurate. Most post-CVS
+       revision-control systems solve this by giving a file a unique
+       long-lived name (analogous to an [186]inode number) that survives
+       renaming. Git does not record such an identifier, and this is
+       claimed as an advantage.^[187][47]^[188][48] [189]Source code files
+       are sometimes split or merged, or simply renamed,^[190][49] and
+       recording this as a simple rename would freeze an inaccurate
+       description of what happened in the (immutable) history. Git
+       addresses the issue by detecting renames while browsing the history
+       of snapshots rather than recording it when making the
+       snapshot.^[191][50] (Briefly, given a file in revision N, a file of
+       the same name in revision N − 1 is its default ancestor. However,
+       when there is no like-named file in revision N − 1, Git searches
+       for a file that existed only in revision N − 1 and is very similar
+       to the new file.) However, it does require more [192]CPU-intensive
+       work every time the history is reviewed, and several options to
+       adjust the heuristics are available. This mechanism does not always
+       work; sometimes a file that is renamed with changes in the same
+       commit is read as a deletion of the old file and the creation of a
+       new file. Developers can work around this limitation by committing
+       the rename and the changes separately.
+
+   Git implements several merging strategies; a non-default strategy can
+   be selected at merge time:^[193][51]
+     * resolve: the traditional [194]three-way merge algorithm.
+     * recursive: This is the default when pulling or merging one branch,
+       and is a variant of the three-way merge algorithm.
+
+     When there are more than one common ancestors that can be used for
+     three-way merge, it creates a merged tree of the common ancestors
+     and uses that as the reference tree for the three-way merge. This
+     has been reported to result in fewer merge conflicts without causing
+     mis-merges by tests done on prior merge commits taken from Linux 2.6
+     kernel development history. Also, this can detect and handle merges
+     involving renames.
+
+   — Linus Torvalds^[195][52]
+
+     octopus: This is the default when merging more than two heads.
+
+Data structures[[196]edit]
+
+   Git's primitives are not inherently a [197]source-code management
+   system. Torvalds explains:^[198][53]
+
+     In many ways you can just see git as a filesystem – it's
+     [199]content-addressable, and it has a notion of versioning, but I
+     really designed it coming at the problem from the viewpoint of a
+     filesystem person (hey, kernels is what I do), and I actually have
+     absolutely zero interest in creating a traditional SCM system.
+
+   From this initial design approach, Git has developed the full set of
+   features expected of a traditional SCM,^[200][33] with features mostly
+   being created as needed, then refined and extended over time.
+
+   Some data flows and storage levels in the Git revision control system
+
+   Git has two [201]data structures: a mutable index (also called stage or
+   cache) that caches information about the working directory and the next
+   revision to be committed; and an immutable, append-only object
+   database.
+
+   The index serves as a connection point between the object database and
+   the working tree.
+
+   The object database contains five types of objects:^[202][54]^[203][55]
+     * A blob ([204]binary large object) is the content of a [205]file.
+       Blobs have no proper file name, time stamps, or other metadata. (A
+       blob's name internally is a hash of its content.)
+     * A tree object is the equivalent of a directory. It contains a list
+       of file names, each with some type bits and a reference to a blob
+       or tree object that is that file, symbolic link, or directory's
+       contents. These objects are a snapshot of the source tree. (In
+       whole, this comprises a [206]Merkle tree, meaning that only a
+       single hash for the root tree is sufficient and actually used in
+       commits to precisely pinpoint to the exact state of whole tree
+       structures of any number of sub-directories and files.)
+     * A commit object links tree objects together into a history. It
+       contains the name of a tree object (of the top-level source
+       directory), a timestamp, a log message, and the names of zero or
+       more parent commit objects.
+     * A tag object is a container that contains a reference to another
+       object and can hold added meta-data related to another object. Most
+       commonly, it is used to store a [207]digital signature of a commit
+       object corresponding to a particular release of the data being
+       tracked by Git.
+     * A packfile object is a zlib version compressed of various other
+       objects for compactness and ease of transport over network
+       protocols.
+
+   Each object is identified by a SHA-1 [208]hash of its contents. Git
+   computes the hash and uses this value for the object's name. The object
+   is put into a directory matching the first two characters of its hash.
+   The rest of the hash is used as the file name for that object.
+
+   Git stores each revision of a file as a unique blob. The relationships
+   between the blobs can be found through examining the tree and commit
+   objects. Newly added objects are stored in their entirety using
+   [209]zlib compression. This can consume a large amount of disk space
+   quickly, so objects can be combined into packs, which use [210]delta
+   compression to save space, storing blobs as their changes relative to
+   other blobs.
+
+   Additionally, git stores labels called refs (short for references) to
+   indicate the locations of various commits. They are stored in the
+   reference database and are respectively^[211][56]:
+     * Heads (branches): Named references that are advanced automatically
+       to the new commit when a commit is made on top of them.
+     * HEAD: A reserved head that will be compared against the working
+       tree to create a commit.
+     * Tags: Like branch references but fixed to a particular commit. Used
+       to label important points in the history.
+
+  References[[212]edit]
+
+   Every object in the Git database that is not referred to may be cleaned
+   up by using a garbage collection command or automatically. An object
+   may be referenced by another object or an explicit reference. Git knows
+   different types of references. The commands to create, move, and delete
+   references vary. "git show-ref" lists all references. Some types are:
+     * heads: refers to an object locally,
+     * remotes: refers to an object which exists in a remote repository,
+     * stash: refers to an object not yet committed,
+     * meta: e.g. a configuration in a bare repository, user rights; the
+       refs/meta/config namespace was introduced retrospectively, gets
+       used by [213]Gerrit,^[214][57]
+     * tags: see above.
+
+Implementations[[215]edit]
+
+   [216]gitg is a graphical front-end using [217]GTK+
+
+   Git is primarily developed on [218]Linux, although it also supports
+   most major operating systems, including [219]BSD, [220]Solaris,
+   [221]macOS, and [222]Windows.^[223][58]
+
+   The first Windows [224]port of Git was primarily a Linux-emulation
+   framework that hosts the Linux version. Installing Git under Windows
+   creates a similarly named Program Files directory containing the
+   [225]Mingw-w64 port of the [226]GNU Compiler Collection, [227]Perl 5,
+   [228]MSYS2 (itself a fork of [229]Cygwin, a Unix-like emulation
+   environment for Windows) and various other Windows ports or emulations
+   of Linux utilities and libraries. Currently, native Windows builds of
+   Git are distributed as 32- and 64-bit installers.^[230][59] The git
+   official website currently maintains a build of Git for Windows, still
+   using the MSYS2 environment.^[231][60]
+
+   The JGit implementation of Git is a pure [232]Java software library,
+   designed to be embedded in any Java application. JGit is used in the
+   [233]Gerrit code-review tool, and in EGit, a Git client for the
+   [234]Eclipse IDE.^[235][61]
+
+   go-git is an [236]open-source implementation of Git written in pure
+   [237]Go.^[238][62] It is currently used for backing projects as a
+   [239]SQL interface for Git code repositories^[240][63] and providing
+   [241]encryption for Git.^[242][64]
+
+   The Dulwich implementation of Git is a pure [243]Python software
+   component for Python 2.7, 3.4 and 3.5^[244][65]
+
+   The libgit2 implementation of Git is an ANSI C software library with no
+   other dependencies, which can be built on multiple platforms, including
+   Windows, Linux, macOS, and BSD.^[245][66] It has bindings for many
+   programming languages, including [246]Ruby, Python, and
+   [247]Haskell.^[248][67]^[249][68]^[250][69]
+
+   JS-Git is a [251]JavaScript implementation of a subset of
+   Git.^[252][70]
+
+Git GUIs[[253]edit]
+
+   See also: [254]Comparison of Git GUIs
+
+Git server[[255]edit]
+
+   Screenshot of Gitweb interface showing a commit [256]diff
+
+   As Git is a distributed version-control system, it could be used as a
+   server out of the box. It's shipped with a built-in command git daemon
+   which starts a simple TCP server running on the GIT protocol.^[257][71]
+   Dedicated Git HTTP servers help (amongst other features) by adding
+   access control, displaying the contents of a Git repository via the web
+   interfaces, and managing multiple repositories. Already existing Git
+   repositories can be cloned and shared to be used by others as a
+   centralized repo. It can also be accessed via remote shell just by
+   having the Git software installed and allowing a user to log
+   in.^[258][72] Git servers typically listen on [259]TCP port
+   9418.^[260][73]
+
+  Open source[[261]edit]
+
+     * Hosting the Git server using the Git Binary.^[262][74]
+     * [263]Gerrit, a git server configurable to support code reviews and
+       providing access via ssh, an integrated [264]Apache MINA or
+       OpenSSH, or an integrated [265]Jetty web server. Gerrit provides
+       integration for LDAP, Active Directory, OpenID, OAuth,
+       Kerberos/GSSAPI, X509 https client certificates. With Gerrit 3.0
+       all configurations will be stored as git repositories, no database
+       required to run. Gerrit has a pull-request feature implemented in
+       its core but lacks a GUI for it.
+     * [266]Phabricator, a spin-off from Facebook. As Facebook primarily
+       uses [267]Mercurial, the git support is not as prominent.^[268][75]
+     * [269]Trac, supporting git, [270]Mercurial, and [271]Subversion with
+       a [272]modified BSD license.
+     * [273]RhodeCode Community Edition (CE), supporting git,
+       [274]Mercurial and [275]Subversion with an [276]AGPLv3 license.
+     * [277]Kallithea, supporting both git and [278]Mercurial, developed
+       in [279]Python with [280]GPL license.
+     * External projects like gitolite,^[281][76] which provide scripts on
+       top of git software to provide fine-grained access control.
+     * There are several other FLOSS solutions for self-hosting, including
+       Gogs^[282][77] and [283]Gitea, a fork of Gogs, both developed in
+       [284]Go language with [285]MIT license.
+
+  Git server as a service[[286]edit]
+
+   See also: [287]Comparison of source code hosting facilities
+
+   There are many offerings of Git repositories as a service. The most
+   popular are [288]GitHub, [289]SourceForge, [290]Bitbucket and
+   [291]GitLab.^[292][78]^[293][79]^[294][80]^[295][81]^[296][82]
+
+Adoption[[297]edit]
+
+   The [298]Eclipse Foundation reported in its annual community survey
+   that as of May 2014, Git is now the most widely used source-code
+   management tool, with 42.9% of professional software developers
+   reporting that they use Git as their primary source-control
+   system^[299][83] compared with 36.3% in 2013, 32% in 2012; or for Git
+   responses excluding use of [300]GitHub: 33.3% in 2014, 30.3% in 2013,
+   27.6% in 2012 and 12.8% in 2011.^[301][84] Open-source directory
+   [302]Black Duck Open Hub reports a similar uptake among open-source
+   projects.^[303][85]
+
+   [304]Stack Overflow has included [305]Version control in their annual
+   developer survey^[306][86] in 2015 (16,694 responses),^[307][87] 2017
+   (30,730 responses)^[308][88] and 2018 (74,298 responses).^[309][89] Git
+   was the overwhelming favorite of responding developers in these
+   surveys, reporting as high as 87.2% in 2018.
+
+   Version control systems used by responding developers:
+
+          Name           2015      2017      2018
+   Git                 69.3%     69.2%     87.2%
+   [310]Subversion     36.9%     9.1%      16.1%
+   [311]TFVC           12.2%     7.3%      10.9%
+   [312]Mercurial      7.9%      1.9%      3.6%
+   [313]CVS            4.2%      ^[314][i] ^[315][i]
+   [316]Perforce       3.3%      ^[317][i] ^[318][i]
+   [319]VSS            ^[320][i] 0.6%      ^[321][i]
+   [322]ClearCase      ^[323][i] 0.4%      ^[324][i]
+   Zip file backups    ^[325][i] 2.0%      7.9%
+   Raw network sharing ^[326][i] 1.7%      7.9%
+   Other               5.8%      3.0%      ^[327][i]
+   None                9.3%      4.8%      4.8%
+
+   The UK IT jobs website itjobswatch.co.uk reports that as of late
+   September 2016, 29.27% of UK permanent software development job
+   openings have cited Git,^[328][90] ahead of 12.17% for Microsoft
+   [329]Team Foundation Server,^[330][91] 10.60% for
+   [331]Subversion,^[332][92] 1.30% for [333]Mercurial,^[334][93] and
+   0.48% for [335]Visual SourceSafe.^[336][94]
+
+  Extensions[[337]edit]
+
+   There are many Git extensions, like [338]Git LFS, which started as an
+   extension to Git in the GitHub community and now is widely used by
+   other repositories. Extensions are usually independently developed and
+   maintained by different people, but at some point in the future a
+   widely used extension can be merged to Git.
+
+   Other open-source git extensions include:
+     * [339]git-annex, a distributed file synchronization system based on
+       Git
+     * [340]git-flow, a set of git extensions to provide high-level
+       repository operations for [341]Vincent Driessen's branching model
+     * [342]git-machete, a repository organizer & tool for automating
+       rebase/merge/pull/push operations
+
+   Microsoft developed the [343]Virtual File System for Git (VFS for Git;
+   formerly Git Virtual File System or GVFS) extension to handle the size
+   of the [344]Windows source-code tree as part of their 2017 migration
+   from [345]Perforce. VFS for Git allows cloned repositories to use
+   placeholders whose contents are downloaded only once a file is
+   accessed.^[346][95]
+
+Conventions[[347]edit]
+
+   Git does not impose many restrictions on how it should be used, however
+   some conventions are adopted in order to organize histories, especially
+   those which require the cooperation of many contributors.
+     * The master branch is created by default with git init and is often
+       used as the branch that other changes are merged into^[348][96].
+       Correspondingly the default name of the upstream remote is origin
+       and so the name of the default remote branch is origin/master.
+     * Pushed commits should not be overwritten, but should rather be
+       reverted^[349][97](a commit is made on top which reverses the
+       changes to an earlier commit), unless they contained sensitive
+       information which should not remain in the history. This prevents
+       shared new commits based on shared commits from being invalid
+       because the commit on which they are based does not exist in the
+       remote.
+     * The git-flow^[350][98] workflow and naming conventions are often
+       adopted to distinguish feature specific unstable histories
+       (feature/*), unstable shared histories (develop), production ready
+       histories (master), and emergency patches to released products
+       (hotfix).
+     * Pull requests are not a feature of git, but are commonly provided
+       by git cloud services. A pull request is a request by one user to
+       merge a branch of their repository fork into another repository
+       sharing the same history (called the upstream remote).^[351][99]
+       The underlying function of a pull request is no different than that
+       of an administrator of a repository pulling changes from another
+       remote (the repository that is the source of the pull request);
+       however the pull request itself is a ticket managed by the hosting
+       server which initiates a scripts to perform these actions, it is
+       not a feature of git SCM.
+
+Security[[352]edit]
+
+   Git does not provide access-control mechanisms, but was designed for
+   operation with other tools that specialize in access
+   control.^[353][100]
+
+   On 17 December 2014, an exploit was found affecting the [354]Windows
+   and [355]macOS versions of the Git client. An attacker could perform
+   [356]arbitrary code execution on a target computer with Git installed
+   by creating a malicious Git tree (directory) named .git (a directory in
+   Git repositories that stores all the data of the repository) in a
+   different case (such as .GIT or .Git, needed because Git does not allow
+   the all-lowercase version of .git to be created manually) with
+   malicious files in the .git/hooks subdirectory (a folder with
+   executable files that Git runs) on a repository that the attacker made
+   or on a repository that the attacker can modify. If a Windows or Mac
+   user pulls (downloads) a version of the repository with the malicious
+   directory, then switches to that directory, the .git directory will be
+   overwritten (due to the case-insensitive trait of the Windows and Mac
+   filesystems) and the malicious executable files in .git/hooks may be
+   run, which results in the attacker's commands being executed. An
+   attacker could also modify the .git/config configuration file, which
+   allows the attacker to create malicious Git aliases (aliases for Git
+   commands or external commands) or modify extant aliases to execute
+   malicious commands when run. The vulnerability was patched in version
+   2.2.1 of Git, released on 17 December 2014, and announced the next
+   day.^[357][101]^[358][102]
+
+   Git version 2.6.1, released on 29 September 2015, contained a patch for
+   a security vulnerability ([359]CVE-
+   [360]2015-7545)^[361][103] that allowed arbitrary code
+   execution.^[362][104] The vulnerability was exploitable if an attacker
+   could convince a victim to clone a specific URL, as the arbitrary
+   commands were embedded in the URL itself.^[363][105] An attacker could
+   use the exploit via a [364]man-in-the-middle attack if the connection
+   was unencrypted,^[365][105] as they could redirect the user to a URL of
+   their choice. Recursive clones were also vulnerable, since they allowed
+   the controller of a repository to specify arbitrary URLs via the
+   gitmodules file.^[366][105]
+
+   Git uses [367]SHA-1 hashes internally. Linus Torvalds has responded
+   that the hash was mostly to guard against accidental corruption, and
+   the security a [368]cryptographically secure hash gives was just an
+   accidental side effect, with the main security being [369]signing
+   elsewhere.^[370][106]^[371][107]
+
+See also[[372]edit]
+
+     * [373]Free and open-source software portal
+     * [374]icon [375]Linux portal
+     * [376]icon [377]Internet portal
+
+     * [378]Comparison of version control software
+     * [379]Comparison of source code hosting facilities
+     * [380]List of revision control software
+
+Notes[[381]edit]
+
+    1. ^ [382]^a [383]^b [384]^c [385]^d [386]^e [387]^f [388]^g [389]^h
+       [390]^i [391]^j [392]^k Not listed as an option in this survey
+
+References[[393]edit]
+
+    1. [394]^ [395]"Initial revision of "git", the information manager
+       from hell". [396]GitHub. 8 April 2005. [397]Archived from the
+       original on 16 November 2015. Retrieved 20 December 2015.
+    2. [398]^ [399]"Commit Graph". [400]GitHub. 8 June 2016. [401]Archived
+       from the original on 20 January 2016. Retrieved 19 December 2015.
+    3. [402]^ [403]"Releases - git/git". Retrieved 28 June 2020.
+    4. [404]^ [405]"Git Source Code Mirror". [406]Archived from the
+       original on 8 February 2017. Retrieved 1 January 2017.
+    5. [407]^ [408]"Git's GPL license at github.com". [409]GitHub. 18
+       January 2010. [410]Archived from the original on 11 April 2016.
+       Retrieved 12 October 2014.
+    6. [411]^ [412]"Git's LGPL license at github.com". [413]GitHub. 20 May
+       2011. [414]Archived from the original on 11 April 2016. Retrieved
+       12 October 2014.
+    7. [415]^ [416]"Tech Talk: Linus Torvalds on git (at 00:01:30)".
+       YouTube. [417]Archived from the original on 20 December 2015.
+       Retrieved 20 July 2014.
+    8. [418]^ Scopatz, Anthony; Huff, Kathryn D. (2015). [419]Effective
+       Computation in Physics. O'Reilly Media, Inc. p. 351.
+       [420]ISBN [421]9781491901595. [422]Archived from the original on 7
+       May 2016. Retrieved 20 April 2016.
+    9. ^ [423]^a [424]^b Torvalds, Linus (7 April 2005). [425]"Re: Kernel
+       SCM saga." linux-kernel (Mailing list). "So I'm writing some
+       scripts to try to track things a whole lot faster."
+   10. ^ [426]^a [427]^b [428]Torvalds, Linus (10 June 2007). [429]"Re:
+       fatal: serious inflate inconsistency". git (Mailing list).
+   11. ^ [430]^a [431]^b [432]^c [433]^d Linus Torvalds (3 May 2007).
+       [434]Google tech talk: Linus Torvalds on git. Event occurs at
+       02:30. [435]Archived from the original on 28 May 2007. Retrieved 16
+       May 2007.
+   12. [436]^ [437]"A Short History of Git". [438]Pro Git (2nd ed.).
+       Apress. 2014. [439]Archived from the original on 25 December 2015.
+       Retrieved 26 December 2015.
+   13. [440]^ Chacon, Scott (24 December 2014). [441]Pro Git (2nd ed.).
+       New York, NY: [442]Apress. pp. 29–30.
+       [443]ISBN [444]978-1-4842-0077-3. [445]Archived from the original
+       on 25 December 2015.
+   14. [446]^ Brown, Zack (27 July 2018). [447]"Linus Torvalds' BitKeeper
+       blunder". InfoWorld. LinuxJournal. [448]Archived from the original
+       on 13 April 2020. Retrieved 28 May 2020.
+   15. [449]^ [450]BitKeeper and Linux: The end of the road? |linux.com
+       [451]Archived 8 June 2017 at the [452]Wayback Machine
+   16. [453]^ McAllister, Neil (2 May 2005). [454]"Linus Torvalds'
+       BitKeeper blunder". InfoWorld. IDG. [455]Archived from the original
+       on 26 August 2015. Retrieved 8 September 2015.
+   17. ^ [456]^a [457]^b Torvalds, Linus (27 February 2007). [458]"Re:
+       Trivia: When did git self-host?". git (Mailing list).
+   18. [459]^ Torvalds, Linus (6 April 2005). [460]"Kernel SCM saga."
+       linux-kernel (Mailing list).
+   19. [461]^ Torvalds, Linus (17 April 2005). [462]"First ever real
+       kernel git merge!". git (Mailing list).
+   20. [463]^ Mackall, Matt (29 April 2005). [464]"Mercurial 0.4b vs git
+       patchbomb benchmark". git (Mailing list).
+   21. [465]^ Torvalds, Linus (17 June 2005). [466]"Linux 2.6.12".
+       git-commits-head (Mailing list).
+   22. [467]^ Torvalds, Linus (27 July 2005). [468]"Meet the new
+       maintainer..." git (Mailing list).
+   23. [469]^ Hamano, Junio C. (21 December 2005). [470]"Announce: Git
+       1.0.0". git (Mailing list).
+   24. [471]^ [472]"GitFaq: Why the 'Git' name?". Git.or.cz. [473]Archived
+       from the original on 23 July 2012. Retrieved 14 July 2012.
+   25. [474]^ [475]"After controversy, Torvalds begins work on 'git'". PC
+       World. 14 July 2012. [476]Archived from the original on 1 February
+       2011. "[477]Torvalds seemed aware that his decision to drop
+       BitKeeper would also be controversial. When asked why he called the
+       new software, 'git', [478]British slang meaning 'a rotten person',
+       he said. 'I'm an egotistical bastard, so I name all my projects
+       after myself. First Linux, now git.'"
+   26. [479]^ [480]"git(1) Manual Page". [481]Archived from the original
+       on 21 June 2012. Retrieved 21 July 2012.
+   27. [482]^ [483]"Initial revision of 'git', the information manager
+       from hell · git/git@e83c516". GitHub. [484]Archived from the
+       original on 8 October 2017. Retrieved 21 January 2016.
+   28. [485]^ [486]https://github.com/git/git/releases
+   29. [487]^ [488]"git/git". GitHub.
+   30. [489]^ Hamano, Junio (21 November 2007). [490]"How to maintain
+       Git". GitHub. Retrieved 1 August 2020.
+   31. [491]^ Torvalds, Linus (5 May 2006). [492]"Re: [ANNOUNCE] Git
+       wiki". linux-kernel (Mailing list). "Some historical background" on
+       Git's predecessors
+   32. ^ [493]^a [494]^b Torvalds, Linus (8 April 2005). [495]"Re: Kernel
+       SCM saga". linux-kernel (Mailing list). Retrieved 20 February 2008.
+   33. ^ [496]^a [497]^b Torvalds, Linus (23 March 2006). [498]"Re: Errors
+       GITtifying GCC and Binutils". git (Mailing list).
+   34. [499]^ Torvalds, Linus (20 October 2006). [500]"Re: VCS comparison
+       table". git (Mailing list). A discussion of Git vs. BitKeeper.
+   35. [501]^ [502]"Git - A Short History of Git". git-scm.com. Retrieved
+       15 June 2020.
+   36. [503]^ [504]"Git - Distributed Workflows". git-scm.com. Retrieved
+       15 June 2020.
+   37. [505]^ Torvalds, Linus (19 October 2006). [506]"Re: VCS comparison
+       table". git (Mailing list).
+   38. [507]^ Jst's Blog on Mozillazine [508]"bzr/hg/git performance".
+       Archived from [509]the original on 29 May 2010. Retrieved 12
+       February 2015.
+   39. [510]^ Dreier, Roland (13 November 2006). [511]"Oh what a relief it
+       is". [512]Archived from the original on 16 January 2009., observing
+       that "git log" is 100x faster than "svn log" because the latter
+       must contact a remote server.
+   40. [513]^ [514]"Trust". Git Concepts. Git User's Manual. 18 October
+       2006. [515]Archived from the original on 22 February 2017.
+   41. [516]^ Torvalds, Linus. [517]"Re: VCS comparison table". git
+       (Mailing list). Retrieved 10 April 2009., describing Git's
+       script-oriented design
+   42. [518]^ iabervon (22 December 2005). [519]"Git rocks!".
+       [520]Archived from the original on 14 September 2016., praising
+       Git's scriptability.
+   43. [521]^ [522]"Git User's Manual". 10 March 2020. [523]Archived from
+       the original on 10 May 2020.
+   44. [524]^ [525]"Git - Packfiles". git-scm.com.
+   45. [526]^ Torvalds, Linus (10 April 2005). [527]"Re: more git
+       updates." linux-kernel (Mailing list).
+   46. [528]^ Haible, Bruno (11 February 2007). [529]"how to speed up "git
+       log"?". git (Mailing list).
+   47. [530]^ Torvalds, Linus (1 March 2006). [531]"Re: impure renames /
+       history tracking". git (Mailing list).
+   48. [532]^ Hamano, Junio C. (24 March 2006). [533]"Re: Errors
+       GITtifying GCC and Binutils". git (Mailing list).
+   49. [534]^ Hamano, Junio C. (23 March 2006). [535]"Re: Errors
+       GITtifying GCC and Binutils". git (Mailing list).
+   50. [536]^ Torvalds, Linus (28 November 2006). [537]"Re: git and bzr".
+       git (Mailing list)., on using git-blame to show code moved between
+       source files.
+   51. [538]^ Torvalds, Linus (18 July 2007). [539]"git-merge(1)".
+       [540]Archived from the original on 16 July 2016.
+   52. [541]^ Torvalds, Linus (18 July 2007). [542]"CrissCrossMerge".
+       Archived from [543]the original on 13 January 2006.
+   53. [544]^ Torvalds, Linus (10 April 2005). [545]"Re: more git
+       updates..." linux-kernel (Mailing list).
+   54. [546]^ [547]"Git - Git Objects". git-scm.com.
+   55. [548]^ [549]"Git - Packfiles". git-scm.com.
+   56. [550]^ [551]"Git - Git References". git-scm.com.
+   57. [552]^ [553]"Project Configuration File Format". Gerrit Code
+       Review. Retrieved 2 February 2020.
+   58. [554]^ [555]"downloads". [556]Archived from the original on 8 May
+       2012. Retrieved 14 May 2012.
+   59. [557]^ [558]"msysGit". [559]Archived from the original on 10
+       October 2016. Retrieved 20 September 2016.
+   60. [560]^ [561]"Git - Downloading Package". git-scm.com. ([562]source
+       code)
+   61. [563]^ [564]"JGit". [565]Archived from the original on 31 August
+       2012. Retrieved 24 August 2012.
+   62. [566]^ [567]"Git - go-git". git-scm.com. Retrieved 19 April 2019.
+   63. [568]^ [569]"SQL interface to Git repositories, written in Go.",
+       github.com, retrieved 19 April 2019
+   64. [570]^ [571]"Keybase launches encrypted git". keybase.io. Retrieved
+       19 April 2019.
+   65. [572]^ [573]"Dulwich". [574]Archived from the original on 29 May
+       2012. Retrieved 27 August 2012.
+   66. [575]^ [576]"libgit2". [577]Archived from the original on 11 April
+       2016. Retrieved 24 August 2012.
+   67. [578]^ [579]"rugged". [580]Archived from the original on 24 July
+       2013. Retrieved 24 August 2012.
+   68. [581]^ [582]"pygit2". [583]Archived from the original on 5 August
+       2015. Retrieved 24 August 2012.
+   69. [584]^ [585]"hlibgit2". [586]Archived from the original on 25 May
+       2013. Retrieved 30 April 2013.
+   70. [587]^ [588]"js-git: a JavaScript implementation of Git".
+       [589]Archived from the original on 7 August 2013. Retrieved 13
+       August 2013.
+   71. [590]^ [591]"Git - Git Daemon". git-scm.com. Retrieved 10 July
+       2019.
+   72. [592]^ [593]4.4 Git on the Server – Setting Up the Server
+       [594]Archived 22 October 2014 at the [595]Wayback Machine, Pro Git.
+   73. [596]^ [597]"1.4 Getting Started – Installing Git". git-scm.com.
+       [598]Archived from the original on 2 November 2013. Retrieved 1
+       November 2013.
+   74. [599]^
+       [600]https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-th
+       e-Server
+   75. [601]^ [602]Diffusion User Guide: Repository Hosting.
+   76. [603]^ [604]https://gitolite.com/gitolite/index.html
+   77. [605]^ [606]https://gogs.io/
+   78. [607]^ Krill, Paul (28 September 2016). [608]"Enterprise repo wars:
+       GitHub vs. GitLab vs. Bitbucket". InfoWorld. Retrieved 2 February
+       2020.
+   79. [609]^ [610]"github.com Competitive Analysis, Marketing Mix and
+       Traffic". Alexa. Retrieved 2 February 2020.
+   80. [611]^ [612]"sourceforge.net Competitive Analysis, Marketing Mix
+       and Traffic". Alexa. Retrieved 2 February 2020.
+   81. [613]^ [614]"bitbucket.org Competitive Analysis, Marketing Mix and
+       Traffic". Alexa. Retrieved 2 February 2020.
+   82. [615]^ [616]"gitlab.com Competitive Analysis, Marketing Mix and
+       Traffic". Alexa. Retrieved 2 February 2020.
+   83. [617]^ [618]"Eclipse Community Survey 2014 results | Ian Skerrett".
+       Ianskerrett.wordpress.com. 23 June 2014. [619]Archived from the
+       original on 25 June 2014. Retrieved 23 June 2014.
+   84. [620]^ [621]"Results of Eclipse Community Survey 2012".
+       [622]Archived from the original on 11 April 2016.
+   85. [623]^ [624]"Compare Repositories – Open Hub". [625]Archived from
+       the original on 7 September 2014.
+   86. [626]^ [627]"Stack Overflow Annual Developer Survey". Stack
+       Exchange, Inc. Retrieved 9 January 2020. "Stack Overflow’s annual
+       Developer Survey is the largest and most comprehensive survey of
+       people who code around the world. Each year, we field a survey
+       covering everything from developers’ favorite technologies to their
+       job preferences. This year marks the ninth year we’ve published our
+       annual Developer Survey results, and nearly 90,000 developers took
+       the 20-minute survey earlier this year."
+   87. [628]^ [629]"Stack Overflow Developer Survey 2015". Stack Overflow.
+       Archived from [630]the original on 4 May 2019. Retrieved 29 May
+       2019.
+   88. [631]^ [632]"Stack Overflow Developer Survey 2017". Stack Overflow.
+       Archived from [633]the original on 29 May 2019. Retrieved 29 May
+       2019.
+   89. [634]^ [635]"Stack Overflow Developer Survey 2018". Stack Overflow.
+       Archived from [636]the original on 30 May 2019. Retrieved 29 May
+       2019.
+   90. [637]^ [638]"Git (software) Jobs, Average Salary for Git
+       Distributed Version Control System Skills". Itjobswatch.co.uk.
+       [639]Archived from the original on 8 October 2016. Retrieved 30
+       September 2016.
+   91. [640]^ [641]"Team Foundation Server Jobs, Average Salary for
+       Microsoft Team Foundation Server (TFS) Skills". Itjobswatch.co.uk.
+       [642]Archived from the original on 29 October 2016. Retrieved 30
+       September 2016.
+   92. [643]^ [644]"Subversion Jobs, Average Salary for Apache Subversion
+       (SVN) Skills". Itjobswatch.co.uk. [645]Archived from the original
+       on 25 October 2016. Retrieved 30 September 2016.
+   93. [646]^ [647]"Mercurial Jobs, Average Salary for Mercurial Skills".
+       Itjobswatch.co.uk. [648]Archived from the original on 23 September
+       2016. Retrieved 30 September 2016.
+   94. [649]^ [650]"VSS/SourceSafe Jobs, Average Salary for Microsoft
+       Visual SourceSafe (VSS) Skills". Itjobswatch.co.uk. [651]Archived
+       from the original on 29 October 2016. Retrieved 30 September 2016.
+   95. [652]^ [653]"Windows switch to Git almost complete: 8,500 commits
+       and 1,760 builds each day". Ars Technica. [654]Archived from the
+       original on 24 May 2017. Retrieved 24 May 2017.
+   96. [655]^ [656]"Git - Branches in a Nutshell". git-scm.com. Retrieved
+       15 June 2020. "The “master” branch in Git is not a special branch.
+       It is exactly like any other branch. The only reason nearly every
+       repository has one is that the git init command creates it by
+       default and most people don’t bother to change it."
+   97. [657]^ [658]"Git Revert | Atlassian Git Tutorial". Atlassian.
+       "Reverting has two important advantages over resetting. First, it
+       doesn’t change the project history, which makes it a “safe”
+       operation for commits that have already been published to a shared
+       repository."
+   98. [659]^ [660]"Gitflow Workflow | Atlassian Git Tutorial". Atlassian.
+       Retrieved 15 June 2020.
+   99. [661]^ [662]"Forking Workflow | Atlassian Git Tutorial". Atlassian.
+       Retrieved 15 June 2020.
+   100. [663]^ [664]"Archived copy". [665]Archived from the original on 14
+       September 2016. Retrieved 6 September 2016.CS1 maint: archived copy
+       as title ([666]link)
+   101. [667]^ Pettersen, Tim (20 December 2014). [668]"Securing your Git
+       server against CVE-2014-9390". [669]Archived from the original on
+       24 December 2014. Retrieved 22 December 2014.
+   102. [670]^ Hamano, J. C. (18 December 2014). [671]"[Announce] Git
+       v2.2.1 (and updates to older maintenance tracks)".
+       [672]Newsgroup: [673]gmane.linux.kernel. Archived from [674]the
+       original on 19 December 2014. Retrieved 22 December 2014.
+   103. [675]^ [676]"CVE-2015-7545". 15 December 2015. [677]Archived from
+       the original on 26 December 2015. Retrieved 26 December 2015.
+   104. [678]^ [679]"Git 2.6.1". 29 September 2015. [680]Archived from the
+       original on 11 April 2016. Retrieved 26 December 2015.
+   105. ^ [681]^a [682]^b [683]^c Blake Burkhart; et al. (5 October 2015).
+       [684]"Re: CVE Request: git". [685]Archived from the original on 27
+       December 2015. Retrieved 26 December 2015.
+   106. [686]^ [687]"hash - How safe are signed git tags? Only as safe as
+       SHA-1 or somehow safer?". Information Security Stack Exchange. 22
+       September 2014. [688]Archived from the original on 24 June 2016.
+   107. [689]^ [690]"Why does Git use a cryptographic hash function?".
+       Stack Overflow. 1 March 2015. [691]Archived from the original on 1
+       July 2016.
+
+External links[[692]edit]
+
+   Wikimedia Commons has media related to [693]Git.
+
+   Wikibooks has a book on the topic of: [694]Git
+
+     * [695]Official website [696]Edit this at Wikidata
+     * [697]Git at [698]Open Hub
+
+     * [699]v
+     * [700]t
+     * [701]e
+
+   [702]Version control software
+   Years, where available, indicate the date of first stable release.
+   Systems with names in italics are no longer maintained or have planned
+   end-of-life dates.
+   Local only
+   [703]Free/open-source
+     * [704]RCS (1982)
+     * [705]SCCS (1972)
+
+     [706]Proprietary
+     * [707]PVCS (1985)
+     * [708]QVCS (1991)
+
+   [709]Revision controlled project visualization-2010-24-02.svg
+   Client–server
+   Free/open-source
+     * [710]CVS (1986, 1990 in C)
+     * [711]CVSNT (1998)
+     * [712]QVCS Enterprise (1998)
+     * [713]Subversion (2000)
+
+   Proprietary
+     * [714]AccuRev SCM (2002)
+     * Azure DevOps
+          + [715]Server (via [716]TFVC) (2005)
+          + [717]Services (via [718]TFVC) (2014)
+     * [719]ClearCase (1992)
+     * [720]CMVC (1994)
+     * [721]Dimensions CM (1980s)
+     * [722]DSEE (1984)
+     * [723]Endevor (1980s)
+     * [724]Integrity (2001)
+     * [725]Panvalet (1970s)
+     * [726]Perforce Helix (1995)
+     * [727]SCLM (1980s?)
+     * [728]Software Change Manager (1970s)
+     * [729]StarTeam (1995)
+     * [730]Surround SCM (2002)
+     * [731]Synergy (1990)
+     * [732]Team Concert (2008)
+     * [733]Vault (2003)
+     * [734]Visual SourceSafe (1994)
+
+   [735]Distributed
+   Free/open-source
+     * [736]ArX (2003)
+     * [737]BitKeeper (2000)
+     * [738]Codeville (2005)
+     * [739]Darcs (2002)
+     * [740]DCVS (2002)
+     * [741]Fossil (2007)
+     * Git (2005)
+     * [742]GNU arch (2001)
+     * [743]GNU Bazaar (2005)
+     * [744]Mercurial (2005)
+     * [745]Monotone (2003)
+
+   Proprietary
+     * Azure DevOps
+          + [746]Server (via Git) (2013)
+          + [747]Services (via Git) (2014)
+     * [748]TeamWare (1992)
+     * [749]Code Co-op (1997)
+     * [750]Plastic SCM (2006)
+
+   Concepts
+     * [751]Baseline
+     * [752]Branch
+     * [753]Changeset
+     * [754]Commit
+     * [755]Data comparison
+     * [756]Delta compression
+     * [757]Fork
+          + [758]Gated commit
+     * [759]Interleaved deltas
+     * [760]Merge
+     * [761]Monorepo
+     * [762]Repository
+     * [763]Tag
+     * [764]Trunk
+
+     * [765]Category
+     * [766]Comparison
+     * [767]List
+
+   [768]Authority control [769]Edit this at Wikidata
+     * [770]GND: [771]7687494-1
+
+   Retrieved from
+   "[772]https://en.wikipedia.org/w/index.php?title=Git&oldid=976935513"
+
+   [773]Categories:
+     * [774]2005 software
+     * [775]Concurrent Versions System
+     * [776]Distributed version control systems
+     * [777]Free version control software
+     * [778]Free software programmed in C
+     * [779]Free software programmed in Perl
+     * [780]Git (software)
+     * [781]Self-hosting software
+     * [782]Linus Torvalds
+     * [783]Software using the GPL license
+     * [784]Software that uses Tk
+
+   Hidden categories:
+     * [785]Webarchive template wayback links
+     * [786]CS1 maint: archived copy as title
+     * [787]Articles with short description
+     * [788]Short description is different from Wikidata
+     * [789]Use dmy dates from March 2012
+     * [790]Wikipedia articles that are too technical from August 2020
+     * [791]All articles that are too technical
+     * [792]Pages using deprecated image syntax
+     * [793]Wikipedia articles needing clarification from August 2020
+     * [794]All articles with unsourced statements
+     * [795]Articles with unsourced statements from April 2020
+     * [796]Articles needing additional references from June 2020
+     * [797]All articles needing additional references
+     * [798]Articles that may contain original research from June 2020
+     * [799]Articles with unsourced statements from June 2020
+     * [800]Commons category link is on Wikidata
+     * [801]Wikipedia articles with GND identifiers
+
+Navigation menu
+
+Personal tools
+
+     * Not logged in
+     * [802]Talk
+     * [803]Contributions
+     * [804]Create account
+     * [805]Log in
+
+Namespaces
+
+     * [806]Article
+     * [807]Talk
+
+   [ ]
+
+Variants
+
+Views
+
+     * [808]Read
+     * [809]Edit
+     * [810]View history
+
+   [ ]
+
+More
+
+Search
+
+   ____________________ Search Go
+
+Navigation
+
+     * [811]Main page
+     * [812]Contents
+     * [813]Current events
+     * [814]Random article
+     * [815]About Wikipedia
+     * [816]Contact us
+     * [817]Donate
+     * [818]Wikipedia store
+
+Contribute
+
+     * [819]Help
+     * [820]Community portal
+     * [821]Recent changes
+     * [822]Upload file
+
+Tools
+
+     * [823]What links here
+     * [824]Related changes
+     * [825]Upload file
+     * [826]Special pages
+     * [827]Permanent link
+     * [828]Page information
+     * [829]Cite this page
+     * [830]Wikidata item
+
+Print/export
+
+     * [831]Download as PDF
+     * [832]Printable version
+
+In other projects
+
+     * [833]Wikimedia Commons
+     * [834]Wikibooks
+     * [835]Wikiversity
+
+Languages
+
+     * [836]العربية
+     * [837]Azərbaycanca
+     * [838]বাংলা
+     * [839]Bân-lâm-gú
+     * [840]Български
+     * [841]Bosanski
+     * [842]Català
+     * [843]Čeština
+     * [844]Dansk
+     * [845]Deutsch
+     * [846]Eesti
+     * [847]Ελληνικά
+     * [848]Español
+     * [849]Esperanto
+     * [850]Euskara
+     * [851]فارسی
+     * [852]Français
+     * [853]Galego
+     * [854]ગુજરાતી
+     * [855]한국어
+     * [856]हिन्दी
+     * [857]Hrvatski
+     * [858]Bahasa Indonesia
+     * [859]Italiano
+     * [860]עברית
+     * [861]Қазақша
+     * [862]Latviešu
+     * [863]Magyar
+     * [864]Македонски
+     * [865]മലയാളം
+     * [866]Bahasa Melayu
+     * [867]မြန်မာဘာသာ
+     * [868]Nederlands
+     * [869]日本語
+     * [870]Norsk bokmål
+     * [871]Polski
+     * [872]Português
+     * [873]Română
+     * [874]Русский
+     * [875]Scots
+     * [876]Simple English
+     * [877]Slovenčina
+     * [878]Slovenščina
+     * [879]Српски / srpski
+     * [880]Suomi
+     * [881]Svenska
+     * [882]தமிழ்
+     * [883]Татарча/tatarça
+     * [884]తెలుగు
+     * [885]ไทย
+     * [886]Türkçe
+     * [887]Українська
+     * [888]اردو
+     * [889]Tiếng Việt
+     * [890]吴语
+     * [891]中文
+
+   [892]Edit links
+
+     * This page was last edited on 5 September 2020, at 23:45 (UTC).
+     * Text is available under the [893]Creative Commons
+       Attribution-ShareAlike License; additional terms may apply. By
+       using this site, you agree to the [894]Terms of Use and
+       [895]Privacy Policy. Wikipedia® is a registered trademark of the
+       [896]Wikimedia Foundation, Inc., a non-profit organization.
+
+     * [897]Privacy policy
+     * [898]About Wikipedia
+     * [899]Disclaimers
+     * [900]Contact Wikipedia
+     * [901]Mobile view
+     * [902]Developers
+     * [903]Statistics
+     * [904]Cookie statement
+
+     * [905]Wikimedia Foundation
+     * [906]Powered by MediaWiki
+
+References
+
+   Visible links
+   1. file://en.m.wikipedia.org/wiki/Git
+   2. file:///w/index.php?title=Git&action=edit
+   3. file:///w/opensearch_desc.php
+   4. file:///home/vanisha/wiki.html#mw-head
+   5. file:///home/vanisha/wiki.html#searchInput
+   6. file:///wiki/Git_(disambiguation)
+   7. https://en.wikipedia.org/w/index.php?title=Git&action=edit
+   8. file:///wiki/Wikipedia:Make_technical_articles_understandable
+   9. file:///wiki/Help:Maintenance_template_removal
+  10. file:///wiki/File:Git-logo.svg
+  11. file:///wiki/File:Git_session.svg
+  12. file:///wiki/Software_developer
+  13. file:///wiki/Linus_Torvalds
+  14. file:///home/vanisha/wiki.html#cite_note-git-initial-commit-1
+  15. file:///wiki/Software_developer
+  16. file:///home/vanisha/wiki.html#cite_note-git-commits-2
+  17. file:///wiki/Software_release_life_cycle
+  18. file:///home/vanisha/wiki.html#cite_note-3
+  19. file:///wiki/Repository_(version_control)
+  20. https://git.kernel.org/pub/scm/git/git.git/
+  21. https://www.wikidata.org/wiki/Q186055#P1324
+  22. file:///wiki/C_(programming_language)
+  23. file:///wiki/Shell_(computing)
+  24. file:///wiki/Perl
+  25. file:///wiki/Tcl
+  26. file:///wiki/Python_(programming_language)
+  27. file:///home/vanisha/wiki.html#cite_note-4
+  28. file:///wiki/Operating_system
+  29. file:///wiki/POSIX
+  30. file:///wiki/Linux
+  31. file:///wiki/MacOS
+  32. file:///wiki/Solaris_(operating_system)
+  33. file:///wiki/AIX
+  34. file:///wiki/Microsoft_Windows
+  35. file:///wiki/Software_categories#Categorization_approaches
+  36. file:///wiki/Version_control
+  37. file:///wiki/Software_license
+  38. file:///wiki/GNU_General_Public_License
+  39. file:///home/vanisha/wiki.html#cite_note-license_gpl-5
+  40. file:///wiki/GNU_Lesser_General_Public_License
+  41. file:///home/vanisha/wiki.html#cite_note-license_lgpl-6
+  42. https://git-scm.com/
+  43. file:///wiki/Help:IPA/English
+  44. file:///home/vanisha/wiki.html#cite_note-:0-7
+  45. file:///wiki/Distributed_version_control
+  46. file:///wiki/Source_code
+  47. file:///wiki/Software_development
+  48. file:///home/vanisha/wiki.html#cite_note-effcomp-8
+  49. file:///wiki/Programmer
+  50. file:///wiki/Computer_file
+  51. file:///wiki/Data_integrity
+  52. file:///wiki/Wikipedia:Please_clarify
+  53. file:///home/vanisha/wiki.html#cite_note-kernel_SCM_saga-9
+  54. file:///home/vanisha/wiki.html#cite_note-integrity_goals-10
+  55. file:///home/vanisha/wiki.html#cite_note-linusGoogleTalk-11
+  56. file:///wiki/Linus_Torvalds
+  57. file:///wiki/Linux_kernel
+  58. file:///home/vanisha/wiki.html#cite_note-pro-git-1.2-12
+  59. file:///wiki/Client–server
+  60. file:///wiki/Directory_(computing)
+  61. file:///wiki/Node_(networking)
+  62. file:///wiki/Repository_(version_control)
+  63. file:///home/vanisha/wiki.html#cite_note-13
+  64. file:///wiki/Free_and_open-source_software
+  65. file:///wiki/GNU_General_Public_License#Version_2
+  66. file:///home/vanisha/wiki.html#History
+  67. file:///home/vanisha/wiki.html#Naming
+  68. file:///home/vanisha/wiki.html#Releases
+  69. file:///home/vanisha/wiki.html#Design
+  70. file:///home/vanisha/wiki.html#Characteristics
+  71. file:///home/vanisha/wiki.html#Data_structures
+  72. file:///home/vanisha/wiki.html#References
+  73. file:///home/vanisha/wiki.html#Implementations
+  74. file:///home/vanisha/wiki.html#Git_GUIs
+  75. file:///home/vanisha/wiki.html#Git_server
+  76. file:///home/vanisha/wiki.html#Open_source
+  77. file:///home/vanisha/wiki.html#Git_server_as_a_service
+  78. file:///home/vanisha/wiki.html#Adoption
+  79. file:///home/vanisha/wiki.html#Extensions
+  80. file:///home/vanisha/wiki.html#Conventions
+  81. file:///home/vanisha/wiki.html#Security
+  82. file:///home/vanisha/wiki.html#See_also
+  83. file:///home/vanisha/wiki.html#Notes
+  84. file:///home/vanisha/wiki.html#References_2
+  85. file:///home/vanisha/wiki.html#External_links
+  86. file:///w/index.php?title=Git&action=edit&section=1
+  87. file:///wiki/Linux_kernel
+  88. file:///wiki/BitKeeper
+  89. file:///home/vanisha/wiki.html#cite_note-14
+  90. file:///home/vanisha/wiki.html#cite_note-linux.com44147-15
+  91. file:///wiki/Larry_McVoy
+  92. file:///wiki/Andrew_Tridgell
+  93. file:///wiki/SourcePuller
+  94. file:///wiki/Reverse_engineering
+  95. file:///home/vanisha/wiki.html#cite_note-16
+  96. file:///wiki/Mercurial
+  97. file:///wiki/Linus_Torvalds
+  98. file:///home/vanisha/wiki.html#cite_note-kernel_SCM_saga-9
+  99. file:///wiki/Concurrent_Versions_System
+ 100. file:///home/vanisha/wiki.html#cite_note-linusGoogleTalk-11
+ 101. file:///home/vanisha/wiki.html#cite_note-linusGoogleTalk-11
+ 102. file:///home/vanisha/wiki.html#cite_note-integrity_goals-10
+ 103. file:///home/vanisha/wiki.html#cite_note-linusGoogleTalk-11
+ 104. file:///home/vanisha/wiki.html#cite_note-selfhost-17
+ 105. file:///wiki/Self-hosting_(compilers)
+ 106. file:///home/vanisha/wiki.html#cite_note-18
+ 107. file:///home/vanisha/wiki.html#cite_note-selfhost-17
+ 108. file:///home/vanisha/wiki.html#cite_note-19
+ 109. file:///home/vanisha/wiki.html#cite_note-20
+ 110. file:///home/vanisha/wiki.html#cite_note-21
+ 111. file:///wiki/Software_maintenance
+ 112. file:///home/vanisha/wiki.html#cite_note-22
+ 113. file:///home/vanisha/wiki.html#cite_note-23
+ 114. file:///w/index.php?title=Git&action=edit&section=2
+ 115. file:///wiki/British_English
+ 116. file:///wiki/Linux_kernel
+ 117. file:///home/vanisha/wiki.html#cite_note-whythegitname-24
+ 118. file:///home/vanisha/wiki.html#cite_note-25
+ 119. file:///wiki/Man_page
+ 120. file:///home/vanisha/wiki.html#cite_note-26
+ 121. file:///home/vanisha/wiki.html#cite_note-27
+ 122. file:///w/index.php?title=Git&action=edit&section=3
+ 123. file:///home/vanisha/wiki.html#cite_note-28
+ 124. file:///wiki/Wikipedia:Citation_needed
+ 125. file:///home/vanisha/wiki.html#cite_note-29
+ 126. file:///home/vanisha/wiki.html#cite_note-30
+ 127. file:///wiki/BitKeeper
+ 128. file:///wiki/Monotone_(software)
+ 129. file:///home/vanisha/wiki.html#cite_note-31
+ 130. file:///home/vanisha/wiki.html#cite_note-a_quick_challenge-32
+ 131. file:///wiki/Cogito_(software)
+ 132. file:///w/index.php?title=StGIT&action=edit&redlink=1
+ 133. file:///home/vanisha/wiki.html#cite_note-a_quick_challenge-32
+ 134. file:///home/vanisha/wiki.html#cite_note-bare_url-33
+ 135. file:///home/vanisha/wiki.html#cite_note-34
+ 136. file:///w/index.php?title=Git&action=edit&section=4
+ 137. file:///wiki/Wikipedia:Verifiability
+ 138. https://en.wikipedia.org/w/index.php?title=Git&action=edit
+ 139. file:///wiki/Help:Referencing_for_beginners
+ 140. file://www.google.com/search?as_eq=wikipedia&q="Git"
+ 141. file://www.google.com/search?tbm=nws&q="Git"+-wikipedia
+ 142. file://www.google.com/search?&q="Git"+site:news.google.com/newspapers&source=newspapers
+ 143. file://www.google.com/search?tbs=bks:1&q="Git"+-wikipedia
+ 144. file://scholar.google.com/scholar?q="Git"
+ 145. https://www.jstor.org/action/doBasicSearch?Query="Git"&acc=on&wc=on
+ 146. file:///wiki/Help:Maintenance_template_removal
+ 147. file:///home/vanisha/wiki.html#cite_note-35
+ 148. file:///wiki/Wikipedia:No_original_research#Synthesis_of_published_material
+ 149. file:///wiki/Darcs
+ 150. file:///wiki/BitKeeper
+ 151. file:///wiki/Mercurial
+ 152. file:///wiki/Bazaar_(software)
+ 153. file:///wiki/Monotone_(software)
+ 154. file:///home/vanisha/wiki.html#cite_note-36
+ 155. file:///wiki/Hypertext_Transfer_Protocol
+ 156. file:///wiki/File_Transfer_Protocol
+ 157. file:///wiki/Secure_Shell
+ 158. file:///wiki/Apache_Subversion
+ 159. file:///wiki/Wikipedia:Citation_needed
+ 160. file:///home/vanisha/wiki.html#cite_note-37
+ 161. file:///home/vanisha/wiki.html#cite_note-38
+ 162. file:///wiki/Order_of_magnitude
+ 163. file:///home/vanisha/wiki.html#cite_note-39
+ 164. file:///wiki/Merkle_tree
+ 165. file:///home/vanisha/wiki.html#cite_note-40
+ 166. file:///wiki/Mercurial
+ 167. file:///wiki/Monotone_(software)
+ 168. file:///wiki/C_(programming_language)
+ 169. file:///home/vanisha/wiki.html#cite_note-41
+ 170. file:///home/vanisha/wiki.html#cite_note-42
+ 171. file:///wiki/Wikipedia:Citation_needed
+ 172. file:///wiki/Garbage_(computer_science)
+ 173. file:///wiki/Garbage_collection_(computer_science)
+ 174. file:///home/vanisha/wiki.html#cite_note-43
+ 175. file:///wiki/Delta_encoding
+ 176. file:///wiki/Heuristic_(computer_science)
+ 177. file:///wiki/SHA-1
+ 178. file:///home/vanisha/wiki.html#cite_note-44
+ 179. file:///wiki/Source_Code_Control_System
+ 180. file:///wiki/Revision_Control_System
+ 181. file:///wiki/Interleaved_deltas
+ 182. file:///wiki/Delta_encoding
+ 183. file:///home/vanisha/wiki.html#cite_note-45
+ 184. file:///home/vanisha/wiki.html#cite_note-46
+ 185. file:///wiki/Concurrent_Versions_System
+ 186. file:///wiki/Inode
+ 187. file:///home/vanisha/wiki.html#cite_note-47
+ 188. file:///home/vanisha/wiki.html#cite_note-48
+ 189. file:///wiki/Source_code
+ 190. file:///home/vanisha/wiki.html#cite_note-49
+ 191. file:///home/vanisha/wiki.html#cite_note-50
+ 192. file:///wiki/Central_processing_unit
+ 193. file:///home/vanisha/wiki.html#cite_note-51
+ 194. file:///wiki/Three-way_merge
+ 195. file:///home/vanisha/wiki.html#cite_note-52
+ 196. file:///w/index.php?title=Git&action=edit&section=5
+ 197. file:///wiki/Source_control_management
+ 198. file:///home/vanisha/wiki.html#cite_note-53
+ 199. file:///wiki/Content-addressable_storage
+ 200. file:///home/vanisha/wiki.html#cite_note-bare_url-33
+ 201. file:///wiki/Data_structure
+ 202. file:///home/vanisha/wiki.html#cite_note-54
+ 203. file:///home/vanisha/wiki.html#cite_note-55
+ 204. file:///wiki/Binary_large_object
+ 205. file:///wiki/Computer_file
+ 206. file:///wiki/Merkle_tree
+ 207. file:///wiki/Digital_signature
+ 208. file:///wiki/Cryptographic_hash_function
+ 209. file:///wiki/Zlib
+ 210. file:///wiki/Delta_encoding
+ 211. file:///home/vanisha/wiki.html#cite_note-56
+ 212. file:///w/index.php?title=Git&action=edit&section=6
+ 213. file:///wiki/Gerrit_(software)
+ 214. file:///home/vanisha/wiki.html#cite_note-Gerrit_Code_Review-57
+ 215. file:///w/index.php?title=Git&action=edit&section=7
+ 216. file:///wiki/GNOME_Core_Applications
+ 217. file:///wiki/GTK+
+ 218. file:///wiki/Linux
+ 219. file:///wiki/Berkeley_Software_Distribution
+ 220. file:///wiki/Solaris_(operating_system)
+ 221. file:///wiki/MacOS
+ 222. file:///wiki/Microsoft_Windows
+ 223. file:///home/vanisha/wiki.html#cite_note-58
+ 224. file:///wiki/Porting
+ 225. file:///wiki/Mingw-w64
+ 226. file:///wiki/GNU_Compiler_Collection
+ 227. file:///wiki/Perl
+ 228. file:///wiki/MSYS2
+ 229. file:///wiki/Cygwin
+ 230. file:///home/vanisha/wiki.html#cite_note-59
+ 231. file:///home/vanisha/wiki.html#cite_note-60
+ 232. file:///wiki/Java_(software_platform)
+ 233. file:///wiki/Gerrit_(software)
+ 234. file:///wiki/Eclipse_(software)
+ 235. file:///home/vanisha/wiki.html#cite_note-61
+ 236. file:///wiki/Open-source_software
+ 237. file:///wiki/Go_(programming_language)
+ 238. file:///home/vanisha/wiki.html#cite_note-62
+ 239. file:///wiki/SQL
+ 240. file:///home/vanisha/wiki.html#cite_note-63
+ 241. file:///wiki/Encryption
+ 242. file:///home/vanisha/wiki.html#cite_note-64
+ 243. file:///wiki/Python_(programming_language)
+ 244. file:///home/vanisha/wiki.html#cite_note-65
+ 245. file:///home/vanisha/wiki.html#cite_note-66
+ 246. file:///wiki/Ruby_(programming_language)
+ 247. file:///wiki/Haskell_(programming_language)
+ 248. file:///home/vanisha/wiki.html#cite_note-67
+ 249. file:///home/vanisha/wiki.html#cite_note-68
+ 250. file:///home/vanisha/wiki.html#cite_note-69
+ 251. file:///wiki/JavaScript
+ 252. file:///home/vanisha/wiki.html#cite_note-70
+ 253. file:///w/index.php?title=Git&action=edit&section=8
+ 254. file:///wiki/Comparison_of_Git_GUIs
+ 255. file:///w/index.php?title=Git&action=edit&section=9
+ 256. file:///wiki/Diff
+ 257. file:///home/vanisha/wiki.html#cite_note-71
+ 258. file:///home/vanisha/wiki.html#cite_note-72
+ 259. file:///wiki/Port_(computer_networking)
+ 260. file:///home/vanisha/wiki.html#cite_note-73
+ 261. file:///w/index.php?title=Git&action=edit&section=10
+ 262. file:///home/vanisha/wiki.html#cite_note-74
+ 263. file:///wiki/Gerrit_(software)
+ 264. file:///wiki/Apache_MINA
+ 265. file:///wiki/Jetty_(web_server)
+ 266. file:///wiki/Phabricator
+ 267. file:///wiki/Mercurial
+ 268. file:///home/vanisha/wiki.html#cite_note-75
+ 269. file:///wiki/Trac
+ 270. file:///wiki/Mercurial
+ 271. file:///wiki/Apache_Subversion
+ 272. file:///wiki/Modified_BSD_license
+ 273. file:///wiki/RhodeCode
+ 274. file:///wiki/Mercurial
+ 275. file:///wiki/Apache_Subversion
+ 276. file:///wiki/AGPLv3
+ 277. file:///wiki/Kallithea_(software)
+ 278. file:///wiki/Mercurial
+ 279. file:///wiki/Python_(programming_language)
+ 280. file:///wiki/GPL_license
+ 281. file:///home/vanisha/wiki.html#cite_note-76
+ 282. file:///home/vanisha/wiki.html#cite_note-77
+ 283. file:///wiki/Gitea
+ 284. file:///wiki/Go_(programming_language)
+ 285. file:///wiki/MIT_license
+ 286. file:///w/index.php?title=Git&action=edit&section=11
+ 287. file:///wiki/Comparison_of_source_code_hosting_facilities
+ 288. file:///wiki/GitHub
+ 289. file:///wiki/SourceForge
+ 290. file:///wiki/Bitbucket
+ 291. file:///wiki/GitLab
+ 292. file:///home/vanisha/wiki.html#cite_note-Krill_2016-78
+ 293. file:///home/vanisha/wiki.html#cite_note-Alexa_github.com-79
+ 294. file:///home/vanisha/wiki.html#cite_note-Alexa_sourceforge.net-80
+ 295. file:///home/vanisha/wiki.html#cite_note-Alexa_bitbucket.org-81
+ 296. file:///home/vanisha/wiki.html#cite_note-Alexa_gitlab.com-82
+ 297. file:///w/index.php?title=Git&action=edit&section=12
+ 298. file:///wiki/Eclipse_Foundation
+ 299. file:///home/vanisha/wiki.html#cite_note-ianskerrett.wordpress.com-83
+ 300. file:///wiki/GitHub
+ 301. file:///home/vanisha/wiki.html#cite_note-84
+ 302. file:///wiki/Black_Duck_Open_Hub
+ 303. file:///home/vanisha/wiki.html#cite_note-85
+ 304. file:///wiki/Stack_Overflow
+ 305. file:///wiki/Version_control
+ 306. file:///home/vanisha/wiki.html#cite_note-86
+ 307. file:///home/vanisha/wiki.html#cite_note-87
+ 308. file:///home/vanisha/wiki.html#cite_note-88
+ 309. file:///home/vanisha/wiki.html#cite_note-89
+ 310. file:///wiki/Apache_Subversion
+ 311. file:///wiki/Team_Foundation_Version_Control
+ 312. file:///wiki/Mercurial
+ 313. file:///wiki/Concurrent_Versions_System
+ 314. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 315. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 316. file:///wiki/Perforce_Helix
+ 317. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 318. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 319. file:///wiki/Visual_SourceSafe
+ 320. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 321. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 322. file:///wiki/ClearCase
+ 323. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 324. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 325. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 326. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 327. file:///home/vanisha/wiki.html#cite_note-fn0-90
+ 328. file:///home/vanisha/wiki.html#cite_note-91
+ 329. file:///wiki/Team_Foundation_Server
+ 330. file:///home/vanisha/wiki.html#cite_note-92
+ 331. file:///wiki/Apache_Subversion
+ 332. file:///home/vanisha/wiki.html#cite_note-93
+ 333. file:///wiki/Mercurial
+ 334. file:///home/vanisha/wiki.html#cite_note-94
+ 335. file:///wiki/Visual_SourceSafe
+ 336. file:///home/vanisha/wiki.html#cite_note-95
+ 337. file:///w/index.php?title=Git&action=edit&section=13
+ 338. https://github.com/git-lfs/git-lfs
+ 339. file:///wiki/Git-annex
+ 340. file:///w/index.php?title=Git-flow&action=edit&redlink=1
+ 341. https://nvie.com/posts/a-successful-git-branching-model/
+ 342. https://github.com/VirtusLab/git-machete
+ 343. file:///wiki/Virtual_File_System_for_Git
+ 344. file:///wiki/Microsoft_Windows
+ 345. file:///wiki/Perforce
+ 346. file:///home/vanisha/wiki.html#cite_note-ars-windowsgit-96
+ 347. file:///w/index.php?title=Git&action=edit&section=14
+ 348. file:///home/vanisha/wiki.html#cite_note-97
+ 349. file:///home/vanisha/wiki.html#cite_note-98
+ 350. file:///home/vanisha/wiki.html#cite_note-99
+ 351. file:///home/vanisha/wiki.html#cite_note-100
+ 352. file:///w/index.php?title=Git&action=edit&section=15
+ 353. file:///home/vanisha/wiki.html#cite_note-101
+ 354. file:///wiki/Windows
+ 355. file:///wiki/MacOS
+ 356. file:///wiki/Arbitrary_code_execution
+ 357. file:///home/vanisha/wiki.html#cite_note-102
+ 358. file:///home/vanisha/wiki.html#cite_note-103
+ 359. file:///wiki/CVE_(identifier)
+ 360. https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7545
+ 361. file:///home/vanisha/wiki.html#cite_note-104
+ 362. file:///home/vanisha/wiki.html#cite_note-git-v2.6.1-commit-105
+ 363. file:///home/vanisha/wiki.html#cite_note-seclists-CVE-2015-7545-106
+ 364. file:///wiki/Man-in-the-middle_attack
+ 365. file:///home/vanisha/wiki.html#cite_note-seclists-CVE-2015-7545-106
+ 366. file:///home/vanisha/wiki.html#cite_note-seclists-CVE-2015-7545-106
+ 367. file:///wiki/SHA-1
+ 368. file:///wiki/Cryptographic_hash_function
+ 369. file:///wiki/Digital_signature
+ 370. file:///home/vanisha/wiki.html#cite_note-107
+ 371. file:///home/vanisha/wiki.html#cite_note-108
+ 372. file:///w/index.php?title=Git&action=edit&section=16
+ 373. file:///wiki/Portal:Free_and_open-source_software
+ 374. file:///wiki/File:NewTux.svg
+ 375. file:///wiki/Portal:Linux
+ 376. file:///wiki/File:Crystal_Clear_app_linneighborhood.svg
+ 377. file:///wiki/Portal:Internet
+ 378. file:///wiki/Comparison_of_version_control_software
+ 379. file:///wiki/Comparison_of_source_code_hosting_facilities
+ 380. file:///wiki/List_of_revision_control_software
+ 381. file:///w/index.php?title=Git&action=edit&section=17
+ 382. file:///home/vanisha/wiki.html#cite_ref-fn0_90-0
+ 383. file:///home/vanisha/wiki.html#cite_ref-fn0_90-1
+ 384. file:///home/vanisha/wiki.html#cite_ref-fn0_90-2
+ 385. file:///home/vanisha/wiki.html#cite_ref-fn0_90-3
+ 386. file:///home/vanisha/wiki.html#cite_ref-fn0_90-4
+ 387. file:///home/vanisha/wiki.html#cite_ref-fn0_90-5
+ 388. file:///home/vanisha/wiki.html#cite_ref-fn0_90-6
+ 389. file:///home/vanisha/wiki.html#cite_ref-fn0_90-7
+ 390. file:///home/vanisha/wiki.html#cite_ref-fn0_90-8
+ 391. file:///home/vanisha/wiki.html#cite_ref-fn0_90-9
+ 392. file:///home/vanisha/wiki.html#cite_ref-fn0_90-10
+ 393. file:///w/index.php?title=Git&action=edit&section=18
+ 394. file:///home/vanisha/wiki.html#cite_ref-git-initial-commit_1-0
+ 395. https://github.com/git/git/commit/e83c5163316f89bfbde7d9ab23ca2e25604af290
+ 396. file:///wiki/GitHub
+ 397. https://web.archive.org/web/20151116175401/https://github.com/git/git/commit/e83c5163316f89bfbde7d9ab23ca2e25604af290
+ 398. file:///home/vanisha/wiki.html#cite_ref-git-commits_2-0
+ 399. https://github.com/git/git/graphs/contributors
+ 400. file:///wiki/GitHub
+ 401. https://web.archive.org/web/20160120121816/https://github.com/git/git/graphs/contributors
+ 402. file:///home/vanisha/wiki.html#cite_ref-3
+ 403. https://github.com/git/git/releases
+ 404. file:///home/vanisha/wiki.html#cite_ref-4
+ 405. https://github.com/git/git
+ 406. https://web.archive.org/web/20170208051639/https://github.com/git/git
+ 407. file:///home/vanisha/wiki.html#cite_ref-license_gpl_5-0
+ 408. https://github.com/git/git/blob/master/COPYING
+ 409. file:///wiki/GitHub
+ 410. https://web.archive.org/web/20160411135124/https://github.com/git/git/blob/master/COPYING
+ 411. file:///home/vanisha/wiki.html#cite_ref-license_lgpl_6-0
+ 412. https://github.com/git/git/blob/master/LGPL-2.1
+ 413. file:///wiki/GitHub
+ 414. https://web.archive.org/web/20160411135049/https://github.com/git/git/blob/master/LGPL-2.1
+ 415. file:///home/vanisha/wiki.html#cite_ref-:0_7-0
+ 416. https://www.youtube.com/watch?v=4XpnKHJAok8&t=1m30s
+ 417. https://web.archive.org/web/20151220133030/https://www.youtube.com/watch?v=4XpnKHJAok8&t=1m30s
+ 418. file:///home/vanisha/wiki.html#cite_ref-effcomp_8-0
+ 419. https://books.google.de/books?id=DYoNCgAAQBAJ&pg=PA351
+ 420. file:///wiki/ISBN_(identifier)
+ 421. file:///wiki/Special:BookSources/9781491901595
+ 422. https://web.archive.org/web/20160507172519/https://books.google.de/books?id=DYoNCgAAQBAJ&pg=PA351
+ 423. file:///home/vanisha/wiki.html#cite_ref-kernel_SCM_saga_9-0
+ 424. file:///home/vanisha/wiki.html#cite_ref-kernel_SCM_saga_9-1
+ 425. https://marc.info/?l=linux-kernel&m=111288700902396
+ 426. file:///home/vanisha/wiki.html#cite_ref-integrity_goals_10-0
+ 427. file:///home/vanisha/wiki.html#cite_ref-integrity_goals_10-1
+ 428. file:///wiki/Linus_Torvalds
+ 429. https://marc.info/?l=git&m=118143549107708
+ 430. file:///home/vanisha/wiki.html#cite_ref-linusGoogleTalk_11-0
+ 431. file:///home/vanisha/wiki.html#cite_ref-linusGoogleTalk_11-1
+ 432. file:///home/vanisha/wiki.html#cite_ref-linusGoogleTalk_11-2
+ 433. file:///home/vanisha/wiki.html#cite_ref-linusGoogleTalk_11-3
+ 434. https://www.youtube.com/watch?v=4XpnKHJAok8
+ 435. https://web.archive.org/web/20070528041814/http://www.youtube.com/watch?v=4XpnKHJAok8
+ 436. file:///home/vanisha/wiki.html#cite_ref-pro-git-1.2_12-0
+ 437. https://git-scm.com/book/en/v2/Getting-Started-A-Short-History-of-Git
+ 438. https://git-scm.com/book/en/v2
+ 439. https://web.archive.org/web/20151225223054/http://git-scm.com/book/en/v2
+ 440. file:///home/vanisha/wiki.html#cite_ref-13
+ 441. https://git-scm.com/book/en/v2
+ 442. file:///wiki/Apress
+ 443. file:///wiki/ISBN_(identifier)
+ 444. file:///wiki/Special:BookSources/978-1-4842-0077-3
+ 445. https://web.archive.org/web/20151225223054/http://git-scm.com/book/en/v2
+ 446. file:///home/vanisha/wiki.html#cite_ref-14
+ 447. https://www.linuxjournal.com/content/git-origin-story
+ 448. https://web.archive.org/web/20200413113107/https://www.linuxjournal.com/content/git-origin-story
+ 449. file:///home/vanisha/wiki.html#cite_ref-linux.com44147_15-0
+ 450. https://www.linux.com/news/bitkeeper-and-linux-end-road
+ 451. https://web.archive.org/web/20170608224906/https://www.linux.com/news/bitkeeper-and-linux-end-road
+ 452. file:///wiki/Wayback_Machine
+ 453. file:///home/vanisha/wiki.html#cite_ref-16
+ 454. http://www.infoworld.com/article/2670360/operating-systems/linus-torvalds--bitkeeper-blunder.html
+ 455. https://web.archive.org/web/20150826064920/http://www.infoworld.com/article/2670360/operating-systems/linus-torvalds--bitkeeper-blunder.html
+ 456. file:///home/vanisha/wiki.html#cite_ref-selfhost_17-0
+ 457. file:///home/vanisha/wiki.html#cite_ref-selfhost_17-1
+ 458. https://marc.info/?l=git&m=117254154130732
+ 459. file:///home/vanisha/wiki.html#cite_ref-18
+ 460. https://marc.info/?l=linux-kernel&m=111280216717070
+ 461. file:///home/vanisha/wiki.html#cite_ref-19
+ 462. https://marc.info/?l=git&m=111377572329534
+ 463. file:///home/vanisha/wiki.html#cite_ref-20
+ 464. https://marc.info/?l=git&m=111475459526688
+ 465. file:///home/vanisha/wiki.html#cite_ref-21
+ 466. https://marc.info/?l=git-commits-head&m=111904216911731
+ 467. file:///home/vanisha/wiki.html#cite_ref-22
+ 468. https://marc.info/?l=git&m=112243466603239
+ 469. file:///home/vanisha/wiki.html#cite_ref-23
+ 470. https://marc.info/?l=git&m=113515203321888
+ 471. file:///home/vanisha/wiki.html#cite_ref-whythegitname_24-0
+ 472. https://git.wiki.kernel.org/index.php/GitFaq#Why_the_.27Git.27_name.3F
+ 473. https://web.archive.org/web/20120723224559/https://git.wiki.kernel.org/index.php/GitFaq#Why_the_.27Git.27_name.3F
+ 474. file:///home/vanisha/wiki.html#cite_ref-25
+ 475. http://www.pcworld.idg.com.au/article/129776/after_controversy_torvalds_begins_work_git_/
+ 476. https://web.archive.org/web/20110201184934/http://www.pcworld.idg.com.au/article/129776/after_controversy_torvalds_begins_work_git_/
+ 477. file:///wiki/Torvalds
+ 478. file:///wiki/British_English
+ 479. file:///home/vanisha/wiki.html#cite_ref-26
+ 480. https://git-scm.com/docs/git.html
+ 481. https://web.archive.org/web/20120621133627/http://www.git-scm.com/docs/git.html
+ 482. file:///home/vanisha/wiki.html#cite_ref-27
+ 483. https://github.com/git/git/blob/e83c5163316f89bfbde7d9ab23ca2e25604af290/README
+ 484. https://web.archive.org/web/20171008211145/https://github.com/git/git/blob/e83c5163316f89bfbde7d9ab23ca2e25604af290/README
+ 485. file:///home/vanisha/wiki.html#cite_ref-28
+ 486. https://github.com/git/git/releases
+ 487. file:///home/vanisha/wiki.html#cite_ref-29
+ 488. https://github.com/git/git
+ 489. file:///home/vanisha/wiki.html#cite_ref-30
+ 490. https://github.com/git/git/blob/master/Documentation/howto/maintain-git.txt
+ 491. file:///home/vanisha/wiki.html#cite_ref-31
+ 492. https://marc.info/?l=git&m=114685143200012
+ 493. file:///home/vanisha/wiki.html#cite_ref-a_quick_challenge_32-0
+ 494. file:///home/vanisha/wiki.html#cite_ref-a_quick_challenge_32-1
+ 495. https://marc.info/?l=linux-kernel&m=111293537202443
+ 496. file:///home/vanisha/wiki.html#cite_ref-bare_url_33-0
+ 497. file:///home/vanisha/wiki.html#cite_ref-bare_url_33-1
+ 498. https://marc.info/?l=git&m=114314642000462
+ 499. file:///home/vanisha/wiki.html#cite_ref-34
+ 500. https://marc.info/?l=git&m=116129092117475
+ 501. file:///home/vanisha/wiki.html#cite_ref-35
+ 502. https://git-scm.com/book/en/v2/Getting-Started-A-Short-History-of-Git
+ 503. file:///home/vanisha/wiki.html#cite_ref-36
+ 504. https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows
+ 505. file:///home/vanisha/wiki.html#cite_ref-37
+ 506. https://marc.info/?l=git&m=116128307511686
+ 507. file:///home/vanisha/wiki.html#cite_ref-38
+ 508. https://web.archive.org/web/20100529094107/http://weblogs.mozillazine.org/jst/archives/2006/11/vcs_performance.html
+ 509. http://weblogs.mozillazine.org/jst/archives/2006/11/vcs_performance.html
+ 510. file:///home/vanisha/wiki.html#cite_ref-39
+ 511. http://digitalvampire.org/blog/index.php/2006/11/16/oh-what-a-relief-it-is/
+ 512. https://web.archive.org/web/20090116175841/http://digitalvampire.org/blog/index.php/2006/11/16/oh-what-a-relief-it-is/
+ 513. file:///home/vanisha/wiki.html#cite_ref-40
+ 514. https://www.kernel.org/pub/software/scm/git/docs/user-manual.html#trust
+ 515. https://web.archive.org/web/20170222053056/https://www.kernel.org/pub/software/scm/git/docs/user-manual.html#trust
+ 516. file:///home/vanisha/wiki.html#cite_ref-41
+ 517. https://marc.info/?l=git&m=116118369005954
+ 518. file:///home/vanisha/wiki.html#cite_ref-42
+ 519. https://lwn.net/Articles/165202/
+ 520. https://web.archive.org/web/20160914100946/https://lwn.net/Articles/165202/
+ 521. file:///home/vanisha/wiki.html#cite_ref-43
+ 522. https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-gc.html
+ 523. https://web.archive.org/web/20200510190720/https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-gc.html
+ 524. file:///home/vanisha/wiki.html#cite_ref-44
+ 525. https://git-scm.com/book/en/v2/Git-Internals-Packfiles
+ 526. file:///home/vanisha/wiki.html#cite_ref-45
+ 527. https://marc.info/?l=linux-kernel&m=111314792424707
+ 528. file:///home/vanisha/wiki.html#cite_ref-46
+ 529. https://marc.info/?l=git&m=117119479505638
+ 530. file:///home/vanisha/wiki.html#cite_ref-47
+ 531. https://marc.info/?l=git&m=114123702826251
+ 532. file:///home/vanisha/wiki.html#cite_ref-48
+ 533. https://marc.info/?l=git&m=114316047119262
+ 534. file:///home/vanisha/wiki.html#cite_ref-49
+ 535. https://marc.info/?l=git&m=114315795227271
+ 536. file:///home/vanisha/wiki.html#cite_ref-50
+ 537. https://marc.info/?l=git&m=116473016012824
+ 538. file:///home/vanisha/wiki.html#cite_ref-51
+ 539. https://www.kernel.org/pub/software/scm/git/docs/git-merge.html
+ 540. https://web.archive.org/web/20160716100147/https://www.kernel.org/pub/software/scm/git/docs/git-merge.html
+ 541. file:///home/vanisha/wiki.html#cite_ref-52
+ 542. https://web.archive.org/web/20060113122252/http://revctrl.org/CrissCrossMerge
+ 543. http://revctrl.org/CrissCrossMerge
+ 544. file:///home/vanisha/wiki.html#cite_ref-53
+ 545. https://marc.info/?l=linux-kernel&m=111314792424707
+ 546. file:///home/vanisha/wiki.html#cite_ref-54
+ 547. https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
+ 548. file:///home/vanisha/wiki.html#cite_ref-55
+ 549. https://git-scm.com/book/en/v2/Git-Internals-Packfiles
+ 550. file:///home/vanisha/wiki.html#cite_ref-56
+ 551. https://git-scm.com/book/en/v2/Git-Internals-Git-References
+ 552. file:///home/vanisha/wiki.html#cite_ref-Gerrit_Code_Review_57-0
+ 553. https://gerrit-review.googlesource.com/Documentation/config-project-config.html
+ 554. file:///home/vanisha/wiki.html#cite_ref-58
+ 555. https://git-scm.com/downloads
+ 556. https://web.archive.org/web/20120508021315/http://git-scm.com/downloads
+ 557. file:///home/vanisha/wiki.html#cite_ref-59
+ 558. https://github.com/msysgit/msysgit
+ 559. https://web.archive.org/web/20161010143600/https://github.com/msysgit/msysgit
+ 560. file:///home/vanisha/wiki.html#cite_ref-60
+ 561. https://git-scm.com/download/win
+ 562. https://github.com/git-for-windows/git
+ 563. file:///home/vanisha/wiki.html#cite_ref-61
+ 564. https://www.eclipse.org/jgit/
+ 565. https://web.archive.org/web/20120831201256/http://eclipse.org/jgit/
+ 566. file:///home/vanisha/wiki.html#cite_ref-62
+ 567. https://git-scm.com/book/en/v2/Appendix-B:-Embedding-Git-in-your-Applications-go-git
+ 568. file:///home/vanisha/wiki.html#cite_ref-63
+ 569. https://github.com/src-d/gitbase
+ 570. file:///home/vanisha/wiki.html#cite_ref-64
+ 571. https://keybase.io/blog/encrypted-git-for-everyone
+ 572. file:///home/vanisha/wiki.html#cite_ref-65
+ 573. https://www.samba.org/~jelmer/dulwich/
+ 574. https://web.archive.org/web/20120529053253/http://www.samba.org/~jelmer/dulwich/
+ 575. file:///home/vanisha/wiki.html#cite_ref-66
+ 576. https://github.com/libgit2/libgit2/blob/master/README.md
+ 577. https://web.archive.org/web/20160411135623/https://github.com/libgit2/libgit2/blob/master/README.md
+ 578. file:///home/vanisha/wiki.html#cite_ref-67
+ 579. https://github.com/libgit2/rugged
+ 580. https://web.archive.org/web/20130724042431/https://github.com/libgit2/rugged
+ 581. file:///home/vanisha/wiki.html#cite_ref-68
+ 582. https://github.com/libgit2/pygit2
+ 583. https://web.archive.org/web/20150805001221/https://github.com/libgit2/pygit2
+ 584. file:///home/vanisha/wiki.html#cite_ref-69
+ 585. https://hackage.haskell.org/package/hlibgit2
+ 586. https://web.archive.org/web/20130525064750/http://hackage.haskell.org/package/hlibgit2
+ 587. file:///home/vanisha/wiki.html#cite_ref-70
+ 588. https://github.com/creationix/js-git
+ 589. https://web.archive.org/web/20130807173550/https://github.com/creationix/js-git
+ 590. file:///home/vanisha/wiki.html#cite_ref-71
+ 591. https://git-scm.com/book/en/v2/Git-on-the-Server-Git-Daemon
+ 592. file:///home/vanisha/wiki.html#cite_ref-72
+ 593. https://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server
+ 594. https://web.archive.org/web/20141022015944/http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server
+ 595. file:///wiki/Wayback_Machine
+ 596. file:///home/vanisha/wiki.html#cite_ref-73
+ 597. https://git-scm.com/book/ch4-1.html#The-Git-Protocol
+ 598. https://web.archive.org/web/20131102192025/http://git-scm.com/book/ch4-1.html#The-Git-Protocol
+ 599. file:///home/vanisha/wiki.html#cite_ref-74
+ 600. https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
+ 601. file:///home/vanisha/wiki.html#cite_ref-75
+ 602. https://secure.phabricator.com/book/phabricator/article/diffusion_hosting/
+ 603. file:///home/vanisha/wiki.html#cite_ref-76
+ 604. https://gitolite.com/gitolite/index.html
+ 605. file:///home/vanisha/wiki.html#cite_ref-77
+ 606. https://gogs.io/
+ 607. file:///home/vanisha/wiki.html#cite_ref-Krill_2016_78-0
+ 608. https://www.infoworld.com/article/3123244/enterprise-repo-wars-github-vs-gitlab-vs-bitbucket.html
+ 609. file:///home/vanisha/wiki.html#cite_ref-Alexa_github.com_79-0
+ 610. https://www.alexa.com/siteinfo/github.com
+ 611. file:///home/vanisha/wiki.html#cite_ref-Alexa_sourceforge.net_80-0
+ 612. https://www.alexa.com/siteinfo/sourceforge.net
+ 613. file:///home/vanisha/wiki.html#cite_ref-Alexa_bitbucket.org_81-0
+ 614. https://www.alexa.com/siteinfo/bitbucket.org
+ 615. file:///home/vanisha/wiki.html#cite_ref-Alexa_gitlab.com_82-0
+ 616. https://www.alexa.com/siteinfo/gitlab.com
+ 617. file:///home/vanisha/wiki.html#cite_ref-ianskerrett.wordpress.com_83-0
+ 618. https://ianskerrett.wordpress.com/2014/06/23/eclipse-community-survey-2014-results/
+ 619. https://web.archive.org/web/20140625152145/http://ianskerrett.wordpress.com/2014/06/23/eclipse-community-survey-2014-results/
+ 620. file:///home/vanisha/wiki.html#cite_ref-84
+ 621. https://eclipse.org/org/community_survey/Survey_Final_Results_2012.xls
+ 622. https://web.archive.org/web/20160411135719/http://www.eclipse.org/org/community_survey/Survey_Final_Results_2012.xls
+ 623. file:///home/vanisha/wiki.html#cite_ref-85
+ 624. https://www.openhub.net/repositories/compare
+ 625. https://web.archive.org/web/20140907051024/https://www.openhub.net/repositories/compare
+ 626. file:///home/vanisha/wiki.html#cite_ref-86
+ 627. https://insights.stackoverflow.com/survey
+ 628. file:///home/vanisha/wiki.html#cite_ref-87
+ 629. https://web.archive.org/web/20190504144447/https://insights.stackoverflow.com/survey/2015#tech-sourcecontrol
+ 630. https://insights.stackoverflow.com/survey/2015#tech-sourcecontrol
+ 631. file:///home/vanisha/wiki.html#cite_ref-88
+ 632. https://web.archive.org/web/20190529004901/https://insights.stackoverflow.com/survey/2017#work-_-version-control
+ 633. https://insights.stackoverflow.com/survey/2017#work-_-version-control
+ 634. file:///home/vanisha/wiki.html#cite_ref-89
+ 635. https://web.archive.org/web/20190530142357/https://insights.stackoverflow.com/survey/2018/#work-_-version-control
+ 636. https://insights.stackoverflow.com/survey/2018#work-_-version-control
+ 637. file:///home/vanisha/wiki.html#cite_ref-91
+ 638. https://www.itjobswatch.co.uk/jobs/uk/git (software).do
+ 639. https://web.archive.org/web/20161008072321/http://www.itjobswatch.co.uk/jobs/uk/git (software).do
+ 640. file:///home/vanisha/wiki.html#cite_ref-92
+ 641. https://www.itjobswatch.co.uk/jobs/uk/team foundation server.do
+ 642. https://web.archive.org/web/20161029185314/http://www.itjobswatch.co.uk/jobs/uk/team foundation server.do
+ 643. file:///home/vanisha/wiki.html#cite_ref-93
+ 644. https://www.itjobswatch.co.uk/jobs/uk/subversion.do
+ 645. https://web.archive.org/web/20161025011418/http://www.itjobswatch.co.uk/jobs/uk/subversion.do
+ 646. file:///home/vanisha/wiki.html#cite_ref-94
+ 647. https://www.itjobswatch.co.uk/jobs/uk/mercurial.do
+ 648. https://web.archive.org/web/20160923081538/http://www.itjobswatch.co.uk/jobs/uk/mercurial.do
+ 649. file:///home/vanisha/wiki.html#cite_ref-95
+ 650. https://www.itjobswatch.co.uk/jobs/uk/vss/sourcesafe.do
+ 651. https://web.archive.org/web/20161029043610/http://www.itjobswatch.co.uk/jobs/uk/vss/sourcesafe.do
+ 652. file:///home/vanisha/wiki.html#cite_ref-ars-windowsgit_96-0
+ 653. https://arstechnica.com/information-technology/2017/05/90-of-windows-devs-now-using-git-creating-1760-windows-builds-per-day/
+ 654. https://web.archive.org/web/20170524171707/https://arstechnica.com/information-technology/2017/05/90-of-windows-devs-now-using-git-creating-1760-windows-builds-per-day/
+ 655. file:///home/vanisha/wiki.html#cite_ref-97
+ 656. https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell#ch03-git-branching
+ 657. file:///home/vanisha/wiki.html#cite_ref-98
+ 658. https://www.atlassian.com/git/tutorials/undoing-changes/git-revert
+ 659. file:///home/vanisha/wiki.html#cite_ref-99
+ 660. https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+ 661. file:///home/vanisha/wiki.html#cite_ref-100
+ 662. https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow
+ 663. file:///home/vanisha/wiki.html#cite_ref-101
+ 664. https://wincent.com/wiki/git_repository_access_control
+ 665. https://web.archive.org/web/20160914114143/https://wincent.com/wiki/git_repository_access_control
+ 666. file:///wiki/Category:CS1_maint:_archived_copy_as_title
+ 667. file:///home/vanisha/wiki.html#cite_ref-102
+ 668. https://developer.atlassian.com/blog/2014/12/securing-your-git-server/
+ 669. https://web.archive.org/web/20141224012942/https://developer.atlassian.com/blog/2014/12/securing-your-git-server/
+ 670. file:///home/vanisha/wiki.html#cite_ref-103
+ 671. https://web.archive.org/web/20141219024646/http://article.gmane.org/gmane.linux.kernel/1853266
+ 672. file:///wiki/Usenet_newsgroup
+ 673. news:gmane.linux.kernel
+ 674. https://article.gmane.org/gmane.linux.kernel/1853266
+ 675. file:///home/vanisha/wiki.html#cite_ref-104
+ 676. https://people.canonical.com/~ubuntu-security/cve/2015/CVE-2015-7545.html
+ 677. https://web.archive.org/web/20151226232616/http://people.canonical.com/~ubuntu-security/cve/2015/CVE-2015-7545.html
+ 678. file:///home/vanisha/wiki.html#cite_ref-git-v2.6.1-commit_105-0
+ 679. https://github.com/git/git/commit/22f698cb188243b313e024d618283e0293e37140
+ 680. https://web.archive.org/web/20160411135802/https://github.com/git/git/commit/22f698cb188243b313e024d618283e0293e37140
+ 681. file:///home/vanisha/wiki.html#cite_ref-seclists-CVE-2015-7545_106-0
+ 682. file:///home/vanisha/wiki.html#cite_ref-seclists-CVE-2015-7545_106-1
+ 683. file:///home/vanisha/wiki.html#cite_ref-seclists-CVE-2015-7545_106-2
+ 684. http://seclists.org/oss-sec/2015/q4/67
+ 685. https://web.archive.org/web/20151227054727/http://seclists.org/oss-sec/2015/q4/67
+ 686. file:///home/vanisha/wiki.html#cite_ref-107
+ 687. https://security.stackexchange.com/questions/67920/how-safe-are-signed-git-tags-only-as-safe-as-sha-1-or-somehow-safer
+ 688. https://web.archive.org/web/20160624232415/https://security.stackexchange.com/questions/67920/how-safe-are-signed-git-tags-only-as-safe-as-sha-1-or-somehow-safer
+ 689. file:///home/vanisha/wiki.html#cite_ref-108
+ 690. https://stackoverflow.com/questions/28792784/why-does-git-use-a-cryptographic-hash-function
+ 691. https://web.archive.org/web/20160701214638/http://stackoverflow.com/questions/28792784/why-does-git-use-a-cryptographic-hash-function
+ 692. file:///w/index.php?title=Git&action=edit&section=19
+ 693. https://commons.wikimedia.org/wiki/Category:Git
+ 694. https://en.wikibooks.org/wiki/Git
+ 695. https://git-scm.com/
+ 696. https://www.wikidata.org/wiki/Q186055#P856
+ 697. https://www.openhub.net/p/git
+ 698. file:///wiki/Open_Hub
+ 699. file:///wiki/Template:Version_control_software
+ 700. file:///wiki/Template_talk:Version_control_software
+ 701. https://en.wikipedia.org/w/index.php?title=Template:Version_control_software&action=edit
+ 702. file:///wiki/Version_control
+ 703. file:///wiki/Free_and_open-source_software
+ 704. file:///wiki/Revision_Control_System
+ 705. file:///wiki/Source_Code_Control_System
+ 706. file:///wiki/Proprietary_software
+ 707. file:///wiki/PVCS
+ 708. file:///wiki/QVCS
+ 709. file:///wiki/File:Revision_controlled_project_visualization-2010-24-02.svg
+ 710. file:///wiki/Concurrent_Versions_System
+ 711. file:///wiki/CVSNT
+ 712. file:///wiki/QVCS
+ 713. file:///wiki/Apache_Subversion
+ 714. file:///wiki/AccuRev_SCM
+ 715. file:///wiki/Azure_DevOps_Server
+ 716. file:///wiki/Azure_DevOps_Server#TFVC
+ 717. file:///wiki/Microsoft_Visual_Studio#Azure_DevOps_Services
+ 718. file:///wiki/Azure_DevOps_Server#TFVC
+ 719. file:///wiki/Rational_ClearCase
+ 720. file:///wiki/IBM_Configuration_Management_Version_Control_(CMVC)
+ 721. file:///wiki/Dimensions_CM
+ 722. file:///wiki/Apollo_Computer#History
+ 723. file:///wiki/Endevor
+ 724. file:///wiki/PTC_Integrity
+ 725. file:///wiki/Panvalet
+ 726. file:///wiki/Perforce_Helix
+ 727. file:///wiki/IBM_Software_Configuration_and_Library_Manager
+ 728. file:///wiki/CA_Harvest_Software_Change_Manager
+ 729. file:///wiki/StarTeam
+ 730. file:///wiki/Surround_SCM
+ 731. file:///wiki/Rational_Synergy
+ 732. file:///wiki/Rational_Team_Concert
+ 733. file:///wiki/Vault_(version_control_system)
+ 734. file:///wiki/Microsoft_Visual_SourceSafe
+ 735. file:///wiki/Distributed_version_control
+ 736. file:///wiki/ArX
+ 737. file:///wiki/BitKeeper
+ 738. file:///wiki/Codeville
+ 739. file:///wiki/Darcs
+ 740. file:///wiki/Distributed_Concurrent_Versions_System
+ 741. file:///wiki/Fossil_(software)
+ 742. file:///wiki/GNU_arch
+ 743. file:///wiki/GNU_Bazaar
+ 744. file:///wiki/Mercurial
+ 745. file:///wiki/Monotone_(software)
+ 746. file:///wiki/Azure_DevOps_Server
+ 747. file:///wiki/Microsoft_Visual_Studio#Azure_DevOps_Services
+ 748. file:///wiki/Sun_WorkShop_TeamWare
+ 749. file:///wiki/Code_Co-op
+ 750. file:///wiki/Plastic_SCM
+ 751. file:///wiki/Baseline_(configuration_management)
+ 752. file:///wiki/Branching_(version_control)
+ 753. file:///wiki/Changeset
+ 754. file:///wiki/Commit_(version_control)
+ 755. file:///wiki/Data_comparison
+ 756. file:///wiki/Delta_encoding
+ 757. file:///wiki/Fork_(software_development)
+ 758. file:///wiki/Gated_commit
+ 759. file:///wiki/Interleaved_deltas
+ 760. file:///wiki/Merge_(version_control)
+ 761. file:///wiki/Monorepo
+ 762. file:///wiki/Repository_(version_control)
+ 763. file:///wiki/Revision_tag
+ 764. file:///wiki/Trunk_(software)
+ 765. file:///wiki/Category:Version_control_systems
+ 766. file:///wiki/Comparison_of_version_control_software
+ 767. file:///wiki/List_of_version_control_software
+ 768. file:///wiki/Help:Authority_control
+ 769. https://www.wikidata.org/wiki/Q186055#identifiers
+ 770. file:///wiki/GND_(identifier)
+ 771. https://d-nb.info/gnd/7687494-1
+ 772. https://en.wikipedia.org/w/index.php?title=Git&oldid=976935513
+ 773. file:///wiki/Help:Category
+ 774. file:///wiki/Category:2005_software
+ 775. file:///wiki/Category:Concurrent_Versions_System
+ 776. file:///wiki/Category:Distributed_version_control_systems
+ 777. file:///wiki/Category:Free_version_control_software
+ 778. file:///wiki/Category:Free_software_programmed_in_C
+ 779. file:///wiki/Category:Free_software_programmed_in_Perl
+ 780. file:///wiki/Category:Git_(software)
+ 781. file:///wiki/Category:Self-hosting_software
+ 782. file:///wiki/Category:Linus_Torvalds
+ 783. file:///wiki/Category:Software_using_the_GPL_license
+ 784. file:///wiki/Category:Software_that_uses_Tk
+ 785. file:///wiki/Category:Webarchive_template_wayback_links
+ 786. file:///wiki/Category:CS1_maint:_archived_copy_as_title
+ 787. file:///wiki/Category:Articles_with_short_description
+ 788. file:///wiki/Category:Short_description_is_different_from_Wikidata
+ 789. file:///wiki/Category:Use_dmy_dates_from_March_2012
+ 790. file:///wiki/Category:Wikipedia_articles_that_are_too_technical_from_August_2020
+ 791. file:///wiki/Category:All_articles_that_are_too_technical
+ 792. file:///wiki/Category:Pages_using_deprecated_image_syntax
+ 793. file:///wiki/Category:Wikipedia_articles_needing_clarification_from_August_2020
+ 794. file:///wiki/Category:All_articles_with_unsourced_statements
+ 795. file:///wiki/Category:Articles_with_unsourced_statements_from_April_2020
+ 796. file:///wiki/Category:Articles_needing_additional_references_from_June_2020
+ 797. file:///wiki/Category:All_articles_needing_additional_references
+ 798. file:///wiki/Category:Articles_that_may_contain_original_research_from_June_2020
+ 799. file:///wiki/Category:Articles_with_unsourced_statements_from_June_2020
+ 800. file:///wiki/Category:Commons_category_link_is_on_Wikidata
+ 801. file:///wiki/Category:Wikipedia_articles_with_GND_identifiers
+ 802. file:///wiki/Special:MyTalk
+ 803. file:///wiki/Special:MyContributions
+ 804. file:///w/index.php?title=Special:CreateAccount&returnto=Git
+ 805. file:///w/index.php?title=Special:UserLogin&returnto=Git
+ 806. file:///wiki/Git
+ 807. file:///wiki/Talk:Git
+ 808. file:///wiki/Git
+ 809. file:///w/index.php?title=Git&action=edit
+ 810. file:///w/index.php?title=Git&action=history
+ 811. file:///wiki/Main_Page
+ 812. file:///wiki/Wikipedia:Contents
+ 813. file:///wiki/Portal:Current_events
+ 814. file:///wiki/Special:Random
+ 815. file:///wiki/Wikipedia:About
+ 816. file://en.wikipedia.org/wiki/Wikipedia:Contact_us
+ 817. https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&utm_medium=sidebar&utm_campaign=C13_en.wikipedia.org&uselang=en
+ 818. file://shop.wikimedia.org/
+ 819. file:///wiki/Help:Contents
+ 820. file:///wiki/Wikipedia:Community_portal
+ 821. file:///wiki/Special:RecentChanges
+ 822. file:///wiki/Wikipedia:File_Upload_Wizard
+ 823. file:///wiki/Special:WhatLinksHere/Git
+ 824. file:///wiki/Special:RecentChangesLinked/Git
+ 825. file:///wiki/Wikipedia:File_Upload_Wizard
+ 826. file:///wiki/Special:SpecialPages
+ 827. file:///w/index.php?title=Git&oldid=976935513
+ 828. file:///w/index.php?title=Git&action=info
+ 829. file:///w/index.php?title=Special:CiteThisPage&page=Git&id=976935513&wpFormIdentifier=titleform
+ 830. https://www.wikidata.org/wiki/Special:EntityPage/Q186055
+ 831. file:///w/index.php?title=Special:DownloadAsPdf&page=Git&action=show-download-screen
+ 832. file:///w/index.php?title=Git&printable=yes
+ 833. https://commons.wikimedia.org/wiki/Category:Git
+ 834. https://en.wikibooks.org/wiki/Git
+ 835. https://en.wikiversity.org/wiki/Version_Control/Git
+ 836. https://ar.wikipedia.org/wiki/جت_(برنامج)
+ 837. https://az.wikipedia.org/wiki/Git
+ 838. https://bn.wikipedia.org/wiki/গিট
+ 839. https://zh-min-nan.wikipedia.org/wiki/Git
+ 840. https://bg.wikipedia.org/wiki/Git_(софтуер)
+ 841. https://bs.wikipedia.org/wiki/Git_(softver)
+ 842. https://ca.wikipedia.org/wiki/Git
+ 843. https://cs.wikipedia.org/wiki/Git
+ 844. https://da.wikipedia.org/wiki/Git
+ 845. https://de.wikipedia.org/wiki/Git
+ 846. https://et.wikipedia.org/wiki/Git
+ 847. https://el.wikipedia.org/wiki/Git_(λογισμικό)
+ 848. https://es.wikipedia.org/wiki/Git
+ 849. https://eo.wikipedia.org/wiki/Git
+ 850. https://eu.wikipedia.org/wiki/Git
+ 851. https://fa.wikipedia.org/wiki/گیت_(نرم‌افزار)
+ 852. https://fr.wikipedia.org/wiki/Git
+ 853. https://gl.wikipedia.org/wiki/Git
+ 854. https://gu.wikipedia.org/wiki/ગીટ_(સોફ્ટવેર)
+ 855. https://ko.wikipedia.org/wiki/깃_(소프트웨어)
+ 856. https://hi.wikipedia.org/wiki/गिट
+ 857. https://hr.wikipedia.org/wiki/Git
+ 858. https://id.wikipedia.org/wiki/Git
+ 859. https://it.wikipedia.org/wiki/Git_(software)
+ 860. https://he.wikipedia.org/wiki/גיט
+ 861. https://kk.wikipedia.org/wiki/Git
+ 862. https://lv.wikipedia.org/wiki/Git
+ 863. https://hu.wikipedia.org/wiki/Git
+ 864. https://mk.wikipedia.org/wiki/Git
+ 865. https://ml.wikipedia.org/wiki/ഗിറ്റ്
+ 866. https://ms.wikipedia.org/wiki/Git
+ 867. https://my.wikipedia.org/wiki/ဂစ်တ်
+ 868. https://nl.wikipedia.org/wiki/Git_(software)
+ 869. https://ja.wikipedia.org/wiki/Git
+ 870. https://no.wikipedia.org/wiki/Git
+ 871. https://pl.wikipedia.org/wiki/Git_(oprogramowanie)
+ 872. https://pt.wikipedia.org/wiki/Git
+ 873. https://ro.wikipedia.org/wiki/Git
+ 874. https://ru.wikipedia.org/wiki/Git
+ 875. https://sco.wikipedia.org/wiki/Git
+ 876. https://simple.wikipedia.org/wiki/Git_(software)
+ 877. https://sk.wikipedia.org/wiki/Git_(softvér)
+ 878. https://sl.wikipedia.org/wiki/Git
+ 879. https://sr.wikipedia.org/wiki/Гит_(софтвер)
+ 880. https://fi.wikipedia.org/wiki/Git
+ 881. https://sv.wikipedia.org/wiki/Git_(datorprogram)
+ 882. https://ta.wikipedia.org/wiki/கிட்_(மென்பொருள்)
+ 883. https://tt.wikipedia.org/wiki/Git
+ 884. https://te.wikipedia.org/wiki/గిట్
+ 885. https://th.wikipedia.org/wiki/กิต_(ซอฟต์แวร์)
+ 886. https://tr.wikipedia.org/wiki/Git_(yazılım)
+ 887. https://uk.wikipedia.org/wiki/Git
+ 888. https://ur.wikipedia.org/wiki/گٹ
+ 889. https://vi.wikipedia.org/wiki/Git_(phần_mềm)
+ 890. https://wuu.wikipedia.org/wiki/Git
+ 891. https://zh.wikipedia.org/wiki/Git
+ 892. https://www.wikidata.org/wiki/Special:EntityPage/Q186055#sitelinks-wikipedia
+ 893. file://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License
+ 894. file://foundation.wikimedia.org/wiki/Terms_of_Use
+ 895. file://foundation.wikimedia.org/wiki/Privacy_policy
+ 896. file://www.wikimediafoundation.org/
+ 897. https://foundation.wikimedia.org/wiki/Privacy_policy
+ 898. file:///wiki/Wikipedia:About
+ 899. file:///wiki/Wikipedia:General_disclaimer
+ 900. file://en.wikipedia.org/wiki/Wikipedia:Contact_us
+ 901. file://en.m.wikipedia.org/w/index.php?title=Git&mobileaction=toggle_view_mobile
+ 902. https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute
+ 903. https://stats.wikimedia.org/#/en.wikipedia.org
+ 904. https://foundation.wikimedia.org/wiki/Cookie_statement
+ 905. https://wikimediafoundation.org/
+ 906. https://www.mediawiki.org/
+
+   Hidden links:
+ 908. file://localhost/wiki/File:Question_book-new.svg
+ 909. file://localhost/wiki/File:Git_operations.svg
+ 910. file://localhost/wiki/File:Git_operations.svg
+ 911. file://localhost/wiki/File:GNOME_gitg.png
+ 912. file://localhost/wiki/File:GNOME_gitg.png
+ 913. file://localhost/wiki/File:Gitweb.png
+ 914. file://localhost/wiki/File:Gitweb.png
+ 915. file://localhost/wiki/Main_Page
+ 916. file://creativecommons.org/licenses/by-sa/3.0/
